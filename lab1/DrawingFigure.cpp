@@ -5,25 +5,25 @@
 #include "WorkPoints.h"
 #include "DrawingFigure.h"
 
-void InitGraph(graphics &a, QGraphicsView *gV)
+void InitGraph(graphics &canvas, QGraphicsView *graphicsView)
 {
-    a.scene = new QGraphicsScene(gV);
-    a.pen = QPen(Qt::black);
+    canvas.scene = new QGraphicsScene(graphicsView);
+    canvas.pen = QPen(Qt::black);
 }
 
-void Set(QGraphicsView *gV, graphics &a)
+void Set(QGraphicsView *graphicsView, graphics &canvas)
 {
-    QGraphicsScene *prev = gV->scene();
+    QGraphicsScene *prev = graphicsView->scene();
     delete prev;
-    gV->setScene(a.scene);
+    graphicsView->setScene(canvas.scene);
 }
 
 void DrawFigure(figure myFigure, draw arg)
 {
     graphics canvas;
 
-    InitGraph(canvas, arg.gV);
+    InitGraph(canvas, arg.graphicsView);
     DrawLinks(myFigure, arg, canvas);
 
-    Set(arg.gV, canvas);
+    Set(arg.graphicsView, canvas);
 }

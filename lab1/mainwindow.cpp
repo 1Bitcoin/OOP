@@ -1,10 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "InputCoords.h"
-#include "DrawingFigure.h"
+#include "QtForDrawing.h"
 #include "ScaleFigure.h"
 #include "MoveFigure.h"
 #include "TurnFigure.h"
+#include "LoadModel.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,7 +25,7 @@ void DrawAction(Ui::MainWindow* ui, figure myFigure)
 {
     draw drawInfo;
 
-    drawInfo.gV = ui->graphicsView;
+    drawInfo.graphView = ui->graphicsView;
     drawInfo.height = ui->graphicsView->height();
     drawInfo.width = ui->graphicsView->width();
 
@@ -35,9 +36,9 @@ void MainWindow::on_pushButton_3_clicked()
 {
     struct move myMove;
 
-    myMove.dx = ui->lineEdit_4->text().toInt();
-    myMove.dy = ui->lineEdit_5->text().toInt();
-    myMove.dz = ui->lineEdit_6->text().toInt();
+    myMove.dx = ui->SpinBoxDxMove->value();
+    myMove.dy = ui->SpinBoxDyMove->value();
+    myMove.dz = ui->SpinBoxDzMove->value();
 
     int CodeError = MovePointsArray(myFigure, myMove);
 
@@ -51,9 +52,9 @@ void MainWindow::on_pushButton_clicked()
 {
     scale myScale; //add struct
 
-    myScale.kx = ui->lineEdit->text().toFloat();
-    myScale.ky = ui->lineEdit_2->text().toFloat();
-    myScale.kz = ui->lineEdit_3->text().toFloat();
+    myScale.kx = ui->SpinBoxKxScale->value();
+    myScale.ky = ui->SpinBoxKyScale->value();
+    myScale.kz = ui->SpinBoxKzScale->value();
 
     int CodeError = ScalePointsArray(myFigure, myScale);
 
@@ -74,11 +75,11 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    turn myTurn; //add struct
+    turn myTurn;
 
-    myTurn.ox = ui->lineEdit_7->text().toFloat();
-    myTurn.oy = ui->lineEdit_8->text().toFloat();
-    myTurn.oz = ui->lineEdit_9->text().toFloat();
+    myTurn.ox = ui->SpinBoxOxTurn->value();
+    myTurn.oy = ui->SpinBoxOyTurn->value();
+    myTurn.oz = ui->SpinBoxOzTurn->value();
 
     int CodeError = TurnPointsArray(myFigure, myTurn);
 
@@ -88,10 +89,3 @@ void MainWindow::on_pushButton_4_clicked()
     }
 
 }
-
-
-
-
-
-
-

@@ -50,36 +50,6 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Input data for scale&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>440</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>440</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>440</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
@@ -145,26 +115,6 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Input data for move&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>100</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>100</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
@@ -204,16 +154,6 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;dx&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_6">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>100</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
@@ -227,26 +167,6 @@
      <string>Move</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_7">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>280</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_8">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>280</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
@@ -258,16 +178,6 @@
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Input data for turn&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_9">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>280</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLabel" name="label_10">
@@ -320,6 +230,126 @@
     </property>
     <property name="text">
      <string>Turn</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxKxScale">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>440</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxKyScale">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>440</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxKzScale">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>440</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxOzTurn">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>270</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxOxTurn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>270</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxOyTurn">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>270</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxDzMove">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>90</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxDxMove">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>90</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="SpinBoxDyMove">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>90</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>-10000.000000000000000</double>
     </property>
    </widget>
   </widget>

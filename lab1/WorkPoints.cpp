@@ -20,42 +20,41 @@ int ReadCount(figure &myFigure, FILE *f)
     return CodeError;
 }
 
-void DrawLinks(figure myFigure, draw arg, graphics a)
+void DrawLinks(figure myFigure, draw drawInfo, graphics canvas)
 {
-    coord_point p1, p2;
+    coordPoint p1, p2;
     for (int i = 0; i < myFigure.links.amountLinks; i++)
     {
         p1 = GetDot(myFigure.points.arrayStructpoints, myFigure.links.arrayStructlinks[i].from - 1);
         p2 = GetDot(myFigure.points.arrayStructpoints, myFigure.links.arrayStructlinks[i].to - 1);
 
-        p1 = PointTransform(p1, arg);
-        p2 = PointTransform(p2, arg);
+        p1 = PointTransform(p1, drawInfo);
+        p2 = PointTransform(p2, drawInfo);
 
-        AddLine(a, p1.x, p2.x, p1.y, p2.y);
+        AddLine(canvas, p1.x, p2.x, p1.y, p2.y);
     }
 }
 
-coord_point GetDot(point *dots, int number)
+coordPoint GetDot(point *arrayPoints, int number)
 {
-    coord_point dot = {dots[number].x, dots[number].y, dots[number].z};
+    coordPoint dot = {arrayPoints[number].x, arrayPoints[number].y, arrayPoints[number].z};
     return dot;
 }
 
-coord_point PointTransform(coord_point dot, draw arg)
+coordPoint PointTransform(coordPoint structPoint, draw drawInfo)
 {
-    dot.z = sqrt(2)/2 * dot.z;
+    structPoint.z = sqrt(2)/2 * structPoint.z;
 
-    dot.x = dot.x - dot.z;
-    dot.x = dot.x + arg.width / 2;
+    structPoint.x = structPoint.x - structPoint.z;
+    structPoint.x = structPoint.x + drawInfo.width / 2;
 
-    dot.y = dot.z - dot.y;
-    dot.y = dot.y + arg.height / 2;
+    structPoint.y = structPoint.z - structPoint.y;
+    structPoint.y = structPoint.y + drawInfo.height / 2;
 
-    return dot;
+    return structPoint;
 }
 
-void AddLine(graphics a, int x1, int x2, int y1, int y2)
+void AddLine(graphics canvas, int x1, int x2, int y1, int y2)
 {
-    //a.scene->addLine(x1 - z1, z1 - y1, x2 - z2, z2 - y2, a.pen);
-    a.scene->addLine(x1, y1, x2, y2, a.pen);
+    canvas.scene->addLine(x1, y1, x2, y2, canvas.pen);
 }

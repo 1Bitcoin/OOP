@@ -5,9 +5,9 @@
 #include <math.h>
 #include "CodeErrors.h"
 #include "InputCoords.h"
-#include "DrawingFigure.h"
+#include "QtForDrawing.h"
 
-struct coord_point
+struct coordPoint
 {
     double x;
     double y;
@@ -15,10 +15,9 @@ struct coord_point
 };
 
 int ReadCount(figure &myFigure, FILE *f);
-coord_point GetDot(point *dots, int number);
-coord_point PointTransform(coord_point dot, draw arg);
-void DrawLinks(figure myFigure, draw arg, graphics a);
+coordPoint GetDot(point *arrayPoints, int number);
+coordPoint PointTransform(coordPoint structPoint, draw drawInfo);
+void DrawLinks(figure myFigure, draw drawInfo, graphics canvas);
 void AddLine(graphics a, int x1, int x2, int y1, int y2);
-coord_point CalculationZ(coord_point dot);
 
 #endif // WORKPOINTS_H

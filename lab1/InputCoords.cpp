@@ -1,25 +1,7 @@
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
 #include "InputCoords.h"
 #include "CodeErrors.h"
 #include "WorkPoints.h"
 #include "InputLinks.h"
-
-using namespace std;
-
-figure &Init()
-{
-    static figure myFigure;
-
-    myFigure.points.amountDots = 0;
-    myFigure.points.arrayStructpoints = NULL;
-
-    myFigure.links.amountLinks = 0;
-    myFigure.links.arrayStructlinks = NULL;
-
-    return myFigure;
-}
 
 int PointsAlloc(pointsData &points, linksData &links)
 {
@@ -64,44 +46,6 @@ int ReadAllPoints(figure myFigure, FILE *f)
     {
         if (ReadPoint(&myFigure.points.arrayStructpoints[i], f))
             CodeError = ERROR_FILE_FORMAT;
-    }
-    return CodeError;
-}
-
-void TestWrite(figure &myFigure)
-{
-    cout << "Value n = " << myFigure.points.amountDots << endl;
-
-    for (int i = 0; i < myFigure.points.amountDots; i++)
-    {
-        cout << " x = " << myFigure.points.arrayStructpoints[i].x << " y = " << myFigure.points.arrayStructpoints[i].y << " z = " << myFigure.points.arrayStructpoints[i].z << " number = " << myFigure.points.arrayStructpoints[i].number << endl;
-        cout << "from = " << myFigure.links.arrayStructlinks[i].from << "to = "  << myFigure.links.arrayStructlinks[i].to << endl;
-    }
-}
-
-int LoadModelFromFile(figure &myFigure, const char *filename)
-{
-    int CodeError = OK;
-    FILE *f = fopen(filename, "r");
-    if (f)
-    {
-        CodeError = ReadCount(myFigure, f);
-        if (!CodeError)
-        {
-            PointsAlloc(myFigure.points, myFigure.links);
-            CodeError = ReadAllPoints(myFigure, f);
-            if (!CodeError)
-            {
-                CodeError = ReadAllLinks(myFigure, f);
-            }
-            TestWrite(myFigure);
-        }
-
-        fclose(f);
-    }
-    else
-    {
-        CodeError = ERROR_READING_FILE;
     }
     return CodeError;
 }

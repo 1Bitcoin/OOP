@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include "CodeErrors.h"
 #include "WorkPoints.h"
-#include "DrawingFigure.h"
+#include "QtForDrawing.h"
 
 int ReadAllLinks(figure myFigure, FILE *f);
 int ReadLinks(link *arrayLinks, FILE *f);

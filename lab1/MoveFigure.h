@@ -5,13 +5,13 @@
 #include <math.h>
 #include "CodeErrors.h"
 #include "InputCoords.h"
-#include "DrawingFigure.h"
+#include "QtForDrawing.h"
 
 struct move
 {
-    int dx;
-    int dy;
-    int dz;
+    double dx;
+    double dy;
+    double dz;
 };
 
 int MovePointsArray(figure myFigure, move coeff);

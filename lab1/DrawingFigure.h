@@ -6,7 +6,7 @@
 
 struct draw
 {
-    QGraphicsView *gV;
+    QGraphicsView *graphicsView;
     int height;
     int width;
 };

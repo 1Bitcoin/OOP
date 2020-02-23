@@ -16,12 +16,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    DrawingFigure.cpp \
-    ErrorMessages.cpp \
     InputCoords.cpp \
     InputLinks.cpp \
     LoadModel.cpp \
     MoveFigure.cpp \
+    QtForDrawing.cpp \
     ScaleFigure.cpp \
     TurnFigure.cpp \
     WorkPoints.cpp \
@@ -30,11 +29,11 @@ SOURCES += \
 
 HEADERS += \
     CodeErrors.h \
-    DrawingFigure.h \
     InputCoords.h \
     InputLinks.h \
     LoadModel.h \
     MoveFigure.h \
+    QtForDrawing.h \
     ScaleFigure.h \
     TurnFigure.h \
     WorkPoints.h \

@@ -10,31 +10,31 @@ double DeltaSin(double angle)
     return sin(angle * M_PI / 180);
 }
 
-void XTurnPoint(point &dot, double angle)
+void XTurnPoint(point &structPoint, double angle)
 {
     double cosAngle = DeltaCos(angle);
     double sinAngle = DeltaSin(angle);
 
-    dot.y = dot.y + cosAngle + dot.z * sinAngle;
-    dot.z = -dot.y * sinAngle + dot.z * cosAngle;
+    structPoint.y = structPoint.y + cosAngle + structPoint.z * sinAngle;
+    structPoint.z = -structPoint.y * sinAngle + structPoint.z * cosAngle;
 }
 
-void YTurnPoint(point &dot, double angle)
+void YTurnPoint(point &structPoint, double angle)
 {
     double cosAngle = DeltaCos(angle);
     double sinAngle = DeltaSin(angle);
 
-    dot.x = dot.x * cosAngle + dot.z * sinAngle;
-    dot.z = -dot.x * sinAngle + dot.z * cosAngle;
+    structPoint.x = structPoint.x * cosAngle + structPoint.z * sinAngle;
+    structPoint.z = -structPoint.x * sinAngle + structPoint.z * cosAngle;
 }
 
-void ZTurnPoint(point &dot, double angle)
+void ZTurnPoint(point &structPoint, double angle)
 {
     double cosAngle = DeltaCos(angle);
     double sinAngle = DeltaSin(angle);
 
-    dot.x = dot.x * cosAngle + dot.y * sinAngle;
-    dot.y = -dot.x * sinAngle + dot.y * cosAngle;
+    structPoint.x = structPoint.x * cosAngle + structPoint.y * sinAngle;
+    structPoint.y = -structPoint.x * sinAngle + structPoint.y * cosAngle;
 }
 
 int TurnPointsArray(figure myFigure, turn coeff)

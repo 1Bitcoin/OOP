@@ -5,7 +5,7 @@
 #include <math.h>
 #include "CodeErrors.h"
 #include "InputCoords.h"
-#include "DrawingFigure.h"
+#include "QtForDrawing.h"
 
 struct scale
 {
