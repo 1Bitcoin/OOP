@@ -19,7 +19,9 @@ SOURCES += \
     DrawingFigure.cpp \
     InputCoords.cpp \
     InputLinks.cpp \
+    MoveFigure.cpp \
     ScaleFigure.cpp \
+    TurnFigure.cpp \
     WorkPoints.cpp \
     main.cpp \
     mainwindow.cpp
@@ -29,7 +31,9 @@ HEADERS += \
     DrawingFigure.h \
     InputCoords.h \
     InputLinks.h \
+    MoveFigure.h \
     ScaleFigure.h \
+    TurnFigure.h \
     WorkPoints.h \
     mainwindow.h
 

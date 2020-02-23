@@ -7,13 +7,6 @@
 #include "InputCoords.h"
 #include "DrawingFigure.h"
 
-struct move
-{
-    int dx;
-    int dy;
-    int dz;
-};
-
 struct scale
 {
     double kx;
@@ -21,11 +14,7 @@ struct scale
     double kz;
 };
 
-struct turn
-{
-    int ox;
-    int oy;
-    int oz;
-};
+int ScalePointsArray(figure myFigure, scale coeff);
+void ScalePoint(point &structPoint, scale coeff);
 
 #endif // SCALEFIGURE_H

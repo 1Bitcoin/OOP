@@ -5,5 +5,6 @@
 #define ERROR_READING_FILE 1
 #define ERROR_FILE_FORMAT 2
 #define ERROR_ALLOC_MEMORY 2
+#define ERROR_EMPTY 3
 
 #endif // CODEERRORS_H
