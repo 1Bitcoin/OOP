@@ -36,11 +36,7 @@ struct figure
     linksData links;
 };
 
-int LoadModelFromFile(figure &myFigure, const char *filename);
-int PointsAlloc(pointsData &points, linksData &links);
-int ReadAllPoints(figure myFigure, FILE *f);
-int ReadPoint(point *dot, FILE *f);
-void PointsFree(pointsData &points, linksData &links);
-figure &Init();
+int ReadAllPoints(figure myFigure, FILE *file);
+int ReadPoint(point *dot, FILE *file);
 
 #endif // IO_H

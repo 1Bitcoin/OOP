@@ -3,7 +3,7 @@
 
 #include <cstdio>
 #include <math.h>
-#include "CodeErrors.h"
+#include "ErrorMessages.h"
 #include "InputCoords.h"
 #include "QtForDrawing.h"
 
@@ -14,11 +14,11 @@ struct turn
     double oz;
 };
 
-double DeltaCos(double angle);
-double DeltaSin(double angle);
-void XTurnPoint(point &structPoint, double angle);
-void YTurnPoint(point &structPoint, double angle);
-void ZTurnPoint(point &structPoint, double angle);
+double RadianCos(double angle);
+double RadianSin(double angle);
+void TurnOX(point &structPoint, double angle);
+void TurnOY(point &structPoint, double angle);
+void TurnOZ(point &structPoint, double angle);
 int TurnPointsArray(figure myFigure, turn coeff);
 
 #endif // TURNFIGURE_H

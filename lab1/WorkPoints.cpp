@@ -1,37 +1,18 @@
 #include "WorkPoints.h"
 
-int ReadCount(figure &myFigure, FILE *f)
-{
-    int CodeError = OK;
-    int countDots, countLinks = 0;
-
-    if (fscanf(f, "%d %d", &countDots, &countLinks) != 2)
-        CodeError = ERROR_FILE_FORMAT;
-
-    if (countDots <= 0 || countLinks <= 0 )
-        CodeError = ERROR_FILE_FORMAT;
-
-    if (!CodeError)
-    {
-        myFigure.points.amountDots = countDots;
-        myFigure.links.amountLinks = countLinks;
-    }
-
-    return CodeError;
-}
-
 void DrawLinks(figure myFigure, draw drawInfo, graphics canvas)
 {
-    coordPoint p1, p2;
+    coordPoint firstPoint, secondPoint;
+
     for (int i = 0; i < myFigure.links.amountLinks; i++)
     {
-        p1 = GetDot(myFigure.points.arrayStructpoints, myFigure.links.arrayStructlinks[i].from - 1);
-        p2 = GetDot(myFigure.points.arrayStructpoints, myFigure.links.arrayStructlinks[i].to - 1);
+        firstPoint = GetDot(myFigure.points.arrayStructpoints, myFigure.links.arrayStructlinks[i].from - 1);
+        secondPoint = GetDot(myFigure.points.arrayStructpoints, myFigure.links.arrayStructlinks[i].to - 1);
 
-        p1 = PointTransform(p1, drawInfo);
-        p2 = PointTransform(p2, drawInfo);
+        firstPoint = PointTransform(firstPoint, drawInfo);
+        secondPoint = PointTransform(secondPoint, drawInfo);
 
-        AddLine(canvas, p1.x, p2.x, p1.y, p2.y);
+        DrawLine(canvas, firstPoint.x, secondPoint.x, firstPoint.y, secondPoint.y);
     }
 }
 
@@ -54,7 +35,7 @@ coordPoint PointTransform(coordPoint structPoint, draw drawInfo)
     return structPoint;
 }
 
-void AddLine(graphics canvas, int x1, int x2, int y1, int y2)
+void DrawLine(graphics canvas, int x1, int x2, int y1, int y2)
 {
     canvas.scene->addLine(x1, y1, x2, y2, canvas.pen);
 }

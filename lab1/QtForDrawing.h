@@ -17,7 +17,6 @@ struct graphics
     QPen pen;
 };
 
-void Del(graphics &canvas);
 void DrawFigure(figure myFigure, draw drawInfo);
 void Set(QGraphicsView *graphView, graphics &canvas);
 void InitGraph(graphics &canvas, QGraphicsView *graphView);

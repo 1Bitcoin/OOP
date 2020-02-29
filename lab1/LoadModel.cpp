@@ -1,8 +1,27 @@
 #include "LoadModel.h"
 
-figure &Init()
+int ReadCount(figure &myFigure, FILE *file)
 {
-    static figure myFigure;
+    int codeError = OK;
+    int countDots, countLinks = 0;
+
+    if (fscanf(file, "%d %d", &countDots, &countLinks) != 2)
+        codeError = ERROR_FILE_FORMAT;
+
+    if (countDots <= 0 || countLinks <= 0 )
+        codeError = ERROR_FILE_FORMAT;
+
+    if (!codeError)
+    {
+        myFigure.points.amountDots = countDots;
+        myFigure.links.amountLinks = countLinks;
+    }
+
+    return codeError;
+}
+
+figure &Init(figure &myFigure)
+{
 
     myFigure.points.amountDots = 0;
     myFigure.points.arrayStructpoints = NULL;
@@ -15,26 +34,24 @@ figure &Init()
 
 int LoadModelFromFile(figure &myFigure, const char *filename)
 {
-    int CodeError = OK;
-    FILE *f = fopen(filename, "r");
-    if (f)
+    int codeError = OK;
+    FILE *file = fopen(filename, "r");
+
+    if (file)
     {
-        CodeError = ReadCount(myFigure, f);
-        if (!CodeError)
+        codeError = ReadCount(myFigure, file);
+        if (!codeError)
         {
             PointsAlloc(myFigure.points, myFigure.links);
-            CodeError = ReadAllPoints(myFigure, f);
-            if (!CodeError)
-            {
-                CodeError = ReadAllLinks(myFigure, f);
-            }
+            codeError = ReadAllPoints(myFigure, file);
+            if (!codeError)
+                codeError = ReadAllLinks(myFigure, file);
         }
 
-        fclose(f);
+        fclose(file);
     }
     else
-    {
-        CodeError = ERROR_READING_FILE;
-    }
-    return CodeError;
+        codeError = ERROR_READING_FILE;
+
+    return codeError;
 }

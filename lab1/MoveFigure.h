@@ -3,7 +3,7 @@
 
 #include <cstdio>
 #include <math.h>
-#include "CodeErrors.h"
+#include "ErrorMessages.h"
 #include "InputCoords.h"
 #include "QtForDrawing.h"
 

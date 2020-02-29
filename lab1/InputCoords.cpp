@@ -1,51 +1,26 @@
 #include "InputCoords.h"
-#include "CodeErrors.h"
+#include "ErrorMessages.h"
 #include "WorkPoints.h"
 #include "InputLinks.h"
 
-int PointsAlloc(pointsData &points, linksData &links)
+int ReadPoint(point *dot, FILE *file)
 {
-    int CodeError = OK;
-    int countDots = points.amountDots;
-    points.arrayStructpoints = (point*) calloc(countDots, sizeof(point));
+    int codeError = OK;
 
-    int countLinks = links.amountLinks;
-    links.arrayStructlinks = (link*) calloc(countLinks, sizeof(link));
+    if (fscanf(file, "%lf %lf %lf %d", &dot->x, &dot->y, &dot->z, &dot->number) != 4)
+        codeError = ERROR_FILE_FORMAT;
 
-    if (!points.arrayStructpoints)
-        CodeError = ERROR_ALLOC_MEMORY;
-
-    if (!links.arrayStructlinks)
-        CodeError = ERROR_ALLOC_MEMORY;
-
-    return CodeError;
+    return codeError;
 }
 
-void PointsFree(pointsData &points, linksData &links)
+int ReadAllPoints(figure myFigure, FILE *file)
 {
-    if (points.arrayStructpoints)
-        free(points.arrayStructpoints);
+    int codeError = OK;
 
-    if (links.arrayStructlinks)
-        free(links.arrayStructlinks);
-}
-
-int ReadPoint(point *dot, FILE *f)
-{
-    int CodeError = OK;
-    if (fscanf(f, "%lf %lf %lf %d", &dot->x, &dot->y, &dot->z, &dot->number) != 4)
-        CodeError = ERROR_FILE_FORMAT;
-
-    return CodeError;
-}
-
-int ReadAllPoints(figure myFigure, FILE *f)
-{
-    int CodeError = OK;
-    for (int i = 0; i < myFigure.points.amountDots && !CodeError; i++)
+    for (int i = 0; i < myFigure.points.amountDots && !codeError; i++)
     {
-        if (ReadPoint(&myFigure.points.arrayStructpoints[i], f))
-            CodeError = ERROR_FILE_FORMAT;
+        if (ReadPoint(&myFigure.points.arrayStructpoints[i], file))
+            codeError = ERROR_FILE_FORMAT;
     }
-    return CodeError;
+    return codeError;
 }

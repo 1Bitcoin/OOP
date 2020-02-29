@@ -1,30 +1,29 @@
 #include <cstdio>
 #include "mainwindow.h"
 #include "InputCoords.h"
-#include "CodeErrors.h"
+#include "ErrorMessages.h"
 #include "WorkPoints.h"
 #include "QtForDrawing.h"
 
-void InitGraph(graphics &canvas, QGraphicsView *graphView)
+void InitGraph(graphics &canvas, draw drawInfo)
 {
-    canvas.scene = new QGraphicsScene(graphView);
+    canvas.scene = new QGraphicsScene(drawInfo.graphView);
     canvas.pen = QPen(Qt::black);
 }
 
-void Set(QGraphicsView *graphView, graphics &canvas)
+void Set(draw drawInfo, graphics &canvas)
 {
-    QGraphicsScene *prev = graphView->scene();
+    canvas.scene->setSceneRect(QRectF(QPointF(0, 0), QSizeF(drawInfo.width, drawInfo.height)));
+    QGraphicsScene *prev = drawInfo.graphView->scene();
     delete prev;
-    graphView->setScene(canvas.scene);
+    drawInfo.graphView->setScene(canvas.scene);
 }
 
 void DrawFigure(figure myFigure, draw drawInfo)
 {
     graphics canvas;
 
-    InitGraph(canvas, drawInfo.graphView);
+    InitGraph(canvas, drawInfo);
     DrawLinks(myFigure, drawInfo, canvas);
-
-    canvas.scene->setSceneRect(QRectF(QPointF(0, 0), QSizeF(drawInfo.width, drawInfo.height)));
-    Set(drawInfo.graphView, canvas);
+    Set(drawInfo, canvas);
 }

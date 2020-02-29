@@ -3,7 +3,7 @@
 
 #include <cstdio>
 #include <math.h>
-#include "CodeErrors.h"
+#include "ErrorMessages.h"
 #include "InputCoords.h"
 #include "QtForDrawing.h"
 
@@ -14,10 +14,9 @@ struct coordPoint
     double z;
 };
 
-int ReadCount(figure &myFigure, FILE *f);
 coordPoint GetDot(point *arrayPoints, int number);
 coordPoint PointTransform(coordPoint structPoint, draw drawInfo);
 void DrawLinks(figure myFigure, draw drawInfo, graphics canvas);
-void AddLine(graphics a, int x1, int x2, int y1, int y2);
+void DrawLine(graphics a, int x1, int x2, int y1, int y2);
 
 #endif // WORKPOINTS_H

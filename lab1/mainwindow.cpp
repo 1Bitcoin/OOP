@@ -1,3 +1,4 @@
+#include "ErrorMessages.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "InputCoords.h"
@@ -6,6 +7,7 @@
 #include "MoveFigure.h"
 #include "TurnFigure.h"
 #include "LoadModel.h"
+#include "AllocateMemory.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,17 +16,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 }
 
-figure myFigure = Init(); //FIX THIS PLEASE
-
 MainWindow::~MainWindow()
 {
+    PointsFree(myFigure.points, myFigure.links);
     delete ui;
 }
 
 void DrawAction(Ui::MainWindow* ui, figure myFigure)
 {
     draw drawInfo;
-
     drawInfo.graphView = ui->graphicsView;
     drawInfo.height = ui->graphicsView->height();
     drawInfo.width = ui->graphicsView->width();
@@ -32,7 +32,7 @@ void DrawAction(Ui::MainWindow* ui, figure myFigure)
     DrawFigure(myFigure, drawInfo);
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_Move_clicked()
 {
     struct move myMove;
 
@@ -40,40 +40,46 @@ void MainWindow::on_pushButton_3_clicked()
     myMove.dy = ui->SpinBoxDyMove->value();
     myMove.dz = ui->SpinBoxDzMove->value();
 
-    int CodeError = MovePointsArray(myFigure, myMove);
+    int codeError = MovePointsArray(myFigure, myMove);
 
-    if (!CodeError)
-    {
+    if (!codeError)
         DrawAction(ui, myFigure);
-    }
+    else
+        ErrorMessages(codeError);
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_Scale_clicked()
 {
-    scale myScale; //add struct
+    scale myScale;
 
     myScale.kx = ui->SpinBoxKxScale->value();
     myScale.ky = ui->SpinBoxKyScale->value();
     myScale.kz = ui->SpinBoxKzScale->value();
 
-    int CodeError = ScalePointsArray(myFigure, myScale);
+    int codeError = ScalePointsArray(myFigure, myScale);
 
-    if (!CodeError)
-    {
+    if (!codeError)
         DrawAction(ui, myFigure);
-    }
+    else
+        ErrorMessages(codeError);
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_LoadModel_clicked()
 {
-    int CodeError = LoadModelFromFile(myFigure, "model.txt");
-    if (!CodeError)
-    {
+    myFigure = Init(myFigure);
+
+    QString text = ui->InputFileName->text();
+    std::string str = text.toStdString();
+
+    int codeError = LoadModelFromFile(myFigure, str.c_str());
+
+    if (!codeError)
         DrawAction(ui, myFigure);
-    }
+    else
+        ErrorMessages(codeError);
 }
 
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_Turn_clicked()
 {
     turn myTurn;
 
@@ -81,11 +87,10 @@ void MainWindow::on_pushButton_4_clicked()
     myTurn.oy = ui->SpinBoxOyTurn->value();
     myTurn.oz = ui->SpinBoxOzTurn->value();
 
-    int CodeError = TurnPointsArray(myFigure, myTurn);
+    int codeError = TurnPointsArray(myFigure, myTurn);
 
-    if (!CodeError)
-    {
+    if (!codeError)
         DrawAction(ui, myFigure);
-    }
-
+    else
+        ErrorMessages(codeError);
 }

@@ -9,16 +9,13 @@ void MovePoint(point &structPoint, move coeff)
 
 int MovePointsArray(figure myFigure, move coeff)
 {
-    int CodeError = OK;
+    int codeError = OK;
+
     if (myFigure.points.arrayStructpoints)
-    {
         for (int i = 0; i < myFigure.points.amountDots; i++)
             MovePoint(myFigure.points.arrayStructpoints[i], coeff);
-    }
     else
-    {
-        CodeError = ERROR_EMPTY;
-    }
+        codeError = ERROR_EMPTY;
 
-    return CodeError;
+    return codeError;
 }

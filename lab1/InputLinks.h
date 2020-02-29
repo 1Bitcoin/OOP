@@ -4,11 +4,10 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
-#include "CodeErrors.h"
 #include "WorkPoints.h"
 #include "QtForDrawing.h"
 
-int ReadAllLinks(figure myFigure, FILE *f);
-int ReadLinks(link *arrayLinks, FILE *f);
+int ReadAllLinks(figure myFigure, FILE *file);
+int ReadLinks(link *arrayLinks, FILE *file);
 
 #endif // INPUTLINKS_H
