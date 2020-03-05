@@ -30,5 +30,5 @@ void PointsFree(pointsData &points, linksData &links)
 
 void FreeMemory(figure &Myfigure)
 {
-    return PointsFree(Myfigure.points, Myfigure.links);
+    PointsFree(Myfigure.points, Myfigure.links);
 }

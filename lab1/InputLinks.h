@@ -5,6 +5,6 @@
 #include "InputCoords.h" // figure
 
 int ReadAllLinks(figure myFigure, FILE *file);
-int ReadLinks(link *arrayLinks, FILE *file);
+int ReadLinks(link &arrayLinks, FILE *file);
 
 #endif // INPUTLINKS_H

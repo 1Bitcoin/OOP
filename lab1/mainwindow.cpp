@@ -21,6 +21,7 @@ MainWindow::~MainWindow()
 {
     manager myManager;
     myManager.currentTask = FREE;
+    CallManager(myManager, ui);
     delete ui;
 }
 
