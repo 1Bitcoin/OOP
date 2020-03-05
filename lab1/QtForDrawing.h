@@ -18,7 +18,7 @@ struct scene
 };
 
 void DrawFigure(figure myFigure, graphView drawInfo);
-void Set(QGraphicsView *graphView, scene &canvas);
-void InitGraph(scene &canvas, QGraphicsView *graphView);
+void CanvasPlace(QGraphicsView *graphView, scene &canvas);
+void SceneInit(scene &canvas, QGraphicsView *graphView);
 
 #endif // QTFORDRAWING_H

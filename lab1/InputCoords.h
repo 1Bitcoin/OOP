@@ -37,6 +37,6 @@ struct figure
 };
 
 int ReadAllPoints(figure myFigure, FILE *file);
-int ReadPoint(point *dot, FILE *file);
+int ReadPoint(point &dot, FILE *file);
 
 #endif // IO_H
