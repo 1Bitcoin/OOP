@@ -55,3 +55,8 @@ int TurnPointsArray(figure myFigure, turn coeff)
 
     return codeError;
 }
+
+int TurnFigure(figure &Myfigure, turn value)
+{
+    return TurnPointsArray(Myfigure, value);
+}

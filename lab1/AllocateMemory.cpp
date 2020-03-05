@@ -27,3 +27,8 @@ void PointsFree(pointsData &points, linksData &links)
     if (links.arrayStructlinks)
         free(links.arrayStructlinks);
 }
+
+void FreeMemory(figure &Myfigure)
+{
+    return PointsFree(Myfigure.points, Myfigure.links);
+}

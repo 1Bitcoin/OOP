@@ -6,6 +6,9 @@
 #define ERROR_FILE_FORMAT 2
 #define ERROR_ALLOC_MEMORY 2
 #define ERROR_EMPTY 3
+#define ERROR_COMMAND 4
+
+#include "QMessageBox"
 
 void ErrorMessages(int codeError);
 

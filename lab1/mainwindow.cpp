@@ -8,6 +8,7 @@
 #include "TurnFigure.h"
 #include "LoadModel.h"
 #include "AllocateMemory.h"
+#include "DutyManager.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,79 +19,89 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    PointsFree(myFigure.points, myFigure.links);
+    manager myManager;
+    myManager.currentTask = FREE;
     delete ui;
 }
 
-void DrawAction(Ui::MainWindow* ui, figure myFigure)
+void MainWindow::on_LoadModel_clicked()
 {
-    draw drawInfo;
+    manager myManager;
+
+    myManager.currentTask = LOAD_FILE;
+    myManager.load.filename = ui->InputFileName->text().toStdString().c_str();
+
+    int codeError = CallManager(myManager, ui);
+    if (codeError)
+        ErrorMessages(codeError);
+}
+
+int CallManager(manager myManager, Ui::MainWindow* ui)
+{
+    int codeError = DutyManager(myManager);
+
+    if (!codeError)
+        codeError = DrawAction(ui);
+
+    return codeError;
+}
+
+int DrawAction(Ui::MainWindow* ui)
+{
+    graphView drawInfo;
+
     drawInfo.graphView = ui->graphicsView;
     drawInfo.height = ui->graphicsView->height();
     drawInfo.width = ui->graphicsView->width();
 
-    DrawFigure(myFigure, drawInfo);
+    manager myManager;
+
+    myManager.currentTask = PAINT;
+    myManager.view = drawInfo;
+
+    int codeError = DutyManager(myManager);
+
+    return codeError;
 }
 
 void MainWindow::on_Move_clicked()
 {
-    struct move myMove;
+    manager myManager;
+    myManager.currentTask = MOVE;
 
-    myMove.dx = ui->SpinBoxDxMove->value();
-    myMove.dy = ui->SpinBoxDyMove->value();
-    myMove.dz = ui->SpinBoxDzMove->value();
+    myManager.move.dx = ui->SpinBoxDxMove->value();
+    myManager.move.dy = ui->SpinBoxDyMove->value();
+    myManager.move.dz = ui->SpinBoxDzMove->value();
 
-    int codeError = MovePointsArray(myFigure, myMove);
-
+    int codeError = CallManager(myManager, ui);
     if (!codeError)
-        DrawAction(ui, myFigure);
-    else
         ErrorMessages(codeError);
 }
 
 void MainWindow::on_Scale_clicked()
 {
-    scale myScale;
+    manager myManager;
+    myManager.currentTask = SCALE;
 
-    myScale.kx = ui->SpinBoxKxScale->value();
-    myScale.ky = ui->SpinBoxKyScale->value();
-    myScale.kz = ui->SpinBoxKzScale->value();
+    myManager.scale.kx = ui->SpinBoxKxScale->value();
+    myManager.scale.ky = ui->SpinBoxKyScale->value();
+    myManager.scale.kz = ui->SpinBoxKzScale->value();
 
-    int codeError = ScalePointsArray(myFigure, myScale);
-
+    int codeError = CallManager(myManager, ui);
     if (!codeError)
-        DrawAction(ui, myFigure);
-    else
-        ErrorMessages(codeError);
-}
-
-void MainWindow::on_LoadModel_clicked()
-{
-    myFigure = Init(myFigure);
-
-    QString text = ui->InputFileName->text();
-    std::string str = text.toStdString();
-
-    int codeError = LoadModelFromFile(myFigure, str.c_str());
-
-    if (!codeError)
-        DrawAction(ui, myFigure);
-    else
         ErrorMessages(codeError);
 }
 
 void MainWindow::on_Turn_clicked()
 {
-    turn myTurn;
+    manager myManager;
+    myManager.currentTask = TURN;
 
-    myTurn.ox = ui->SpinBoxOxTurn->value();
-    myTurn.oy = ui->SpinBoxOyTurn->value();
-    myTurn.oz = ui->SpinBoxOzTurn->value();
+    myManager.turn.ox = ui->SpinBoxOxTurn->value();
+    myManager.turn.oy = ui->SpinBoxOyTurn->value();
+    myManager.turn.oz = ui->SpinBoxOzTurn->value();
 
-    int codeError = TurnPointsArray(myFigure, myTurn);
-
-    if (!codeError)
-        DrawAction(ui, myFigure);
-    else
+    int codeError = CallManager(myManager, ui);
+    if (codeError)
         ErrorMessages(codeError);
 }

@@ -1,7 +1,4 @@
 #include "InputCoords.h"
-#include "ErrorMessages.h"
-#include "WorkPoints.h"
-#include "InputLinks.h"
 
 int ReadPoint(point *dot, FILE *file)
 {

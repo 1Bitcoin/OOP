@@ -4,21 +4,21 @@
 #include "QGraphicsView"
 #include "InputCoords.h"
 
-struct draw
+struct graphView
 {
     QGraphicsView *graphView;
     int height;
     int width;
 };
 
-struct graphics
+struct scene
 {
     QGraphicsScene *scene;
     QPen pen;
 };
 
-void DrawFigure(figure myFigure, draw drawInfo);
-void Set(QGraphicsView *graphView, graphics &canvas);
-void InitGraph(graphics &canvas, QGraphicsView *graphView);
+void DrawFigure(figure myFigure, graphView drawInfo);
+void Set(QGraphicsView *graphView, scene &canvas);
+void InitGraph(scene &canvas, QGraphicsView *graphView);
 
 #endif // QTFORDRAWING_H

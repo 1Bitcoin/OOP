@@ -1,11 +1,8 @@
 #ifndef SCALEFIGURE_H
 #define SCALEFIGURE_H
 
-#include <cstdio>
-#include <math.h>
 #include "ErrorMessages.h"
 #include "InputCoords.h"
-#include "QtForDrawing.h"
 
 struct scale
 {
@@ -16,5 +13,6 @@ struct scale
 
 int ScalePointsArray(figure myFigure, scale coeff);
 void ScalePoint(point &structPoint, scale coeff);
+int ScaleFigure(figure &myFigure, scale value);
 
 #endif // SCALEFIGURE_H

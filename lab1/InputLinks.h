@@ -1,11 +1,8 @@
 #ifndef INPUTLINKS_H
 #define INPUTLINKS_H
 
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include "WorkPoints.h"
-#include "QtForDrawing.h"
+#include "ErrorMessages.h"
+#include "InputCoords.h" // figure
 
 int ReadAllLinks(figure myFigure, FILE *file);
 int ReadLinks(link *arrayLinks, FILE *file);

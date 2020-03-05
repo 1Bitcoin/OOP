@@ -1,6 +1,6 @@
 #include "WorkPoints.h"
 
-void DrawLinks(figure myFigure, draw drawInfo, graphics canvas)
+void DrawLinks(figure myFigure, graphView drawInfo, scene canvas)
 {
     coordPoint firstPoint, secondPoint;
 
@@ -22,7 +22,7 @@ coordPoint GetDot(point *arrayPoints, int number)
     return dot;
 }
 
-coordPoint PointTransform(coordPoint structPoint, draw drawInfo)
+coordPoint PointTransform(coordPoint structPoint, graphView drawInfo)
 {
     structPoint.z = sqrt(2)/2 * structPoint.z;
 
@@ -35,7 +35,7 @@ coordPoint PointTransform(coordPoint structPoint, draw drawInfo)
     return structPoint;
 }
 
-void DrawLine(graphics canvas, int x1, int x2, int y1, int y2)
+void DrawLine(scene canvas, int x1, int x2, int y1, int y2)
 {
     canvas.scene->addLine(x1, y1, x2, y2, canvas.pen);
 }

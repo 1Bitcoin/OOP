@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     AllocateMemory.cpp \
+    DutyManager.cpp \
     ErrorMessages.cpp \
     InputCoords.cpp \
     InputLinks.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
 
 HEADERS += \
     AllocateMemory.h \
+    DutyManager.h \
     ErrorMessages.h \
     InputCoords.h \
     InputLinks.h \

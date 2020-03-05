@@ -1,5 +1,4 @@
 #include "ErrorMessages.h"
-#include "QMessageBox"
 
 void ErrorMessages(int codeError)
 {
@@ -19,4 +18,9 @@ void ErrorMessages(int codeError)
     {
         QMessageBox::critical(NULL, "ERROR", "Load model!");
     }
+    else if (codeError == ERROR_COMMAND)
+    {
+        QMessageBox::critical(NULL, "ERROR", "Unknown manager instruction!");
+    }
 }
+

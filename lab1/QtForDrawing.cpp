@@ -1,17 +1,13 @@
-#include <cstdio>
-#include "mainwindow.h"
-#include "InputCoords.h"
-#include "ErrorMessages.h"
-#include "WorkPoints.h"
 #include "QtForDrawing.h"
+#include "WorkPoints.h"
 
-void InitGraph(graphics &canvas, draw drawInfo)
+void InitGraph(scene &canvas, graphView drawInfo)
 {
     canvas.scene = new QGraphicsScene(drawInfo.graphView);
     canvas.pen = QPen(Qt::black);
 }
 
-void Set(draw drawInfo, graphics &canvas)
+void Set(graphView drawInfo, scene &canvas)
 {
     canvas.scene->setSceneRect(QRectF(QPointF(0, 0), QSizeF(drawInfo.width, drawInfo.height)));
     QGraphicsScene *prev = drawInfo.graphView->scene();
@@ -19,9 +15,9 @@ void Set(draw drawInfo, graphics &canvas)
     drawInfo.graphView->setScene(canvas.scene);
 }
 
-void DrawFigure(figure myFigure, draw drawInfo)
+void DrawFigure(figure myFigure, graphView drawInfo)
 {
-    graphics canvas;
+    scene canvas;
 
     InitGraph(canvas, drawInfo);
     DrawLinks(myFigure, drawInfo, canvas);
