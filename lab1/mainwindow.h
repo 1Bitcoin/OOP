@@ -14,7 +14,6 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    //figure myFigure;
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
