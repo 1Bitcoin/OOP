@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include "ErrorMessages.h"
+#include "LoadModel.h"
 #include "InputCoords.h"
 
 struct move
@@ -12,7 +13,7 @@ struct move
     double dz;
 };
 
-int MovePointsArray(figure myFigure, move coeff);
+int MovePointsArray(point *arrayStructpoints, int amountDots, move value);
 void MovePoint(point &structPoint, move coeff);
 int MoveFigure(figure &myFigure, move value);
 

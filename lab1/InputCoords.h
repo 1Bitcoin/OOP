@@ -12,31 +12,13 @@ struct point
     int number;
 };
 
-struct link
-{
-    int from;
-    int to;
-};
-
-struct linksData
-{
-    int amountLinks;
-    link *arrayStructlinks;
-};
-
 struct pointsData
 {
     int amountDots;
     point *arrayStructpoints;
 };
 
-struct figure
-{
-    pointsData points;
-    linksData links;
-};
-
-int ReadAllPoints(figure myFigure, FILE *file);
+int ReadAllPoints(point *arrayStructpoints, int amountDots, FILE *file);
 int ReadPoint(point &dot, FILE *file);
 
 #endif // IO_H

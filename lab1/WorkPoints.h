@@ -5,6 +5,7 @@
 #include "ErrorMessages.h"
 #include "InputCoords.h"
 #include "QtForDrawing.h"
+#include "LoadModel.h"
 
 struct coordPoint
 {

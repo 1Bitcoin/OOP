@@ -1,10 +1,17 @@
 #include "QtForDrawing.h"
 #include "WorkPoints.h"
 
-void SceneInit(scene &canvas, graphView drawInfo)
+int SceneInit(scene &canvas, graphView drawInfo)
 {
+    int codeError = OK;
+
     canvas.scene = new QGraphicsScene(drawInfo.graphView);
+    if (!canvas.scene)
+        codeError = ERROR_ALLOC_MEMORY;
+
     canvas.pen = QPen(Qt::black);
+
+    return codeError;
 }
 
 void CanvasPlace(graphView drawInfo, scene &canvas)
@@ -15,11 +22,14 @@ void CanvasPlace(graphView drawInfo, scene &canvas)
     drawInfo.graphView->setScene(canvas.scene);
 }
 
-void DrawFigure(figure myFigure, graphView drawInfo)
+int DrawFigure(figure myFigure, graphView drawInfo)
 {
+    int codeError = OK;
     scene canvas;
 
-    SceneInit(canvas, drawInfo);
+    codeError = SceneInit(canvas, drawInfo);
     DrawLinks(myFigure, drawInfo, canvas);
     CanvasPlace(drawInfo, canvas);
+
+    return codeError;
 }

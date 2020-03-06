@@ -4,6 +4,7 @@
 #include <math.h>
 #include "ErrorMessages.h"
 #include "InputCoords.h"
+#include "Figure.h"
 
 struct turn
 {
@@ -19,7 +20,7 @@ void TurnOX(point &structPoint, double angle);
 void TurnOY(point &structPoint, double angle);
 void TurnOZ(point &structPoint, double angle);
 
-int TurnPointsArray(figure myFigure, turn coeff);
+int TurnPointsArray(point *arrayStructpoints, int amountDots, turn coeff);
 int TurnFigure(figure &Myfigure, turn value);
 
 #endif // TURNFIGURE_H

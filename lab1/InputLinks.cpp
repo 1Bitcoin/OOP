@@ -10,13 +10,13 @@ int ReadLinks(link &arrayLinks, FILE *file)
     return codeError;
 }
 
-int ReadAllLinks(figure myFigure, FILE *file)
+int ReadAllLinks(link *arrayStructlinks, int amountLinks, FILE *file)
 {
     int codeError = OK;
 
-    for (int i = 0; i < myFigure.links.amountLinks && !codeError; i++)
+    for (int i = 0; i < amountLinks && !codeError; i++)
     {
-        if (ReadLinks(myFigure.links.arrayStructlinks[i], file))
+        if (ReadLinks(arrayStructlinks[i], file))
             codeError = ERROR_FILE_FORMAT;
     }
     return codeError;

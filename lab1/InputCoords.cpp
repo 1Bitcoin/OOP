@@ -10,13 +10,13 @@ int ReadPoint(point &dot, FILE *file)
     return codeError;
 }
 
-int ReadAllPoints(figure myFigure, FILE *file)
+int ReadAllPoints(point *arrayStructpoints, int amountDots, FILE *file)
 {
     int codeError = OK;
 
-    for (int i = 0; i < myFigure.points.amountDots && !codeError; i++)
+    for (int i = 0; i < amountDots && !codeError; i++)
     {
-        if (ReadPoint(myFigure.points.arrayStructpoints[i], file))
+        if (ReadPoint(arrayStructpoints[i], file))
             codeError = ERROR_FILE_FORMAT;
     }
     return codeError;

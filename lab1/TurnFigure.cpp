@@ -37,17 +37,17 @@ void TurnOZ(point &structPoint, double angle)
     structPoint.y = -structPoint.x * sinAngle + structPoint.y * cosAngle;
 }
 
-int TurnPointsArray(figure myFigure, turn coeff)
+int TurnPointsArray(point *arrayStructpoints, int amountDots, turn coeff)
 {
     int codeError = OK;
 
-    if (myFigure.points.arrayStructpoints)
+    if (arrayStructpoints)
     {
-        for (int i = 0; i < myFigure.points.amountDots; i++)
+        for (int i = 0; i < amountDots; i++)
         {
-            TurnOX(myFigure.points.arrayStructpoints[i], coeff.ox);
-            TurnOY(myFigure.points.arrayStructpoints[i], coeff.oy);
-            TurnOZ(myFigure.points.arrayStructpoints[i], coeff.oz);
+            TurnOX(arrayStructpoints[i], coeff.ox);
+            TurnOY(arrayStructpoints[i], coeff.oy);
+            TurnOZ(arrayStructpoints[i], coeff.oz);
         }
     }
     else
@@ -58,5 +58,5 @@ int TurnPointsArray(figure myFigure, turn coeff)
 
 int TurnFigure(figure &Myfigure, turn value)
 {
-    return TurnPointsArray(Myfigure, value);
+    return TurnPointsArray(Myfigure.points.arrayStructpoints, Myfigure.points.amountDots, value);
 }

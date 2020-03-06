@@ -6,6 +6,7 @@
 #include "TurnFigure.h"
 #include "LoadModel.h"
 #include "QtForDrawing.h"
+#include "AllocateMemory.h"
 
 enum task
 {

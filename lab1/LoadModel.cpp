@@ -37,21 +37,25 @@ int LoadModelFromFile(figure &myFigure, const char *filename)
     int codeError = OK;
     FILE *file = fopen(filename, "r");
 
-    if (file)
-    {
-        codeError = ReadCount(myFigure, file);
-        if (!codeError)
-        {
-            PointsAlloc(myFigure.points, myFigure.links);
-            codeError = ReadAllPoints(myFigure, file);
-            if (!codeError)
-                codeError = ReadAllLinks(myFigure, file);
-        }
-
-        fclose(file);
-    }
-    else
+    if (!file)
         codeError = ERROR_READING_FILE;
+    else
+        codeError = ReadCount(myFigure, file);
+
+    if (!codeError)
+        codeError = PointsAlloc(myFigure.points, myFigure.links);
+
+    if (codeError == ERROR_ALLOC_MEMORY)
+        FreeMemory(myFigure);
+
+    if (!codeError)
+        codeError = ReadAllPoints(myFigure.points.arrayStructpoints, myFigure.points.amountDots, file);
+
+    if (!codeError)
+        codeError = ReadAllLinks(myFigure.links.arrayStructlinks, myFigure.links.amountLinks, file);
+
+    if (codeError != ERROR_READING_FILE)
+        fclose(file);
 
     return codeError;
 }

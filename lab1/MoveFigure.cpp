@@ -7,13 +7,13 @@ void MovePoint(point &structPoint, move value)
     structPoint.z += value.dz;
 }
 
-int MovePointsArray(figure myFigure, move value)
+int MovePointsArray(point *arrayStructpoints, int amountDots, move value)
 {
     int codeError = OK;
 
-    if (myFigure.points.arrayStructpoints)
-        for (int i = 0; i < myFigure.points.amountDots; i++)
-            MovePoint(myFigure.points.arrayStructpoints[i], value);
+    if (arrayStructpoints)
+        for (int i = 0; i < amountDots; i++)
+            MovePoint(arrayStructpoints[i], value);
     else
         codeError = ERROR_EMPTY;
 
@@ -22,5 +22,5 @@ int MovePointsArray(figure myFigure, move value)
 
 int MoveFigure(figure &myFigure, move value)
 {
-    return MovePointsArray(myFigure, value);
+    return MovePointsArray(myFigure.points.arrayStructpoints, myFigure.points.amountDots, value);
 }

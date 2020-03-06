@@ -3,6 +3,7 @@
 
 #include "QGraphicsView"
 #include "InputCoords.h"
+#include "Figure.h"
 
 struct graphView
 {
@@ -17,8 +18,8 @@ struct scene
     QPen pen;
 };
 
-void DrawFigure(figure myFigure, graphView drawInfo);
+int DrawFigure(figure myFigure, graphView drawInfo);
 void CanvasPlace(QGraphicsView *graphView, scene &canvas);
-void SceneInit(scene &canvas, QGraphicsView *graphView);
+int SceneInit(scene &canvas, QGraphicsView *graphView);
 
 #endif // QTFORDRAWING_H

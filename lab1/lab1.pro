@@ -34,6 +34,7 @@ HEADERS += \
     AllocateMemory.h \
     DutyManager.h \
     ErrorMessages.h \
+    Figure.h \
     InputCoords.h \
     InputLinks.h \
     LoadModel.h \

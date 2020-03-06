@@ -7,14 +7,11 @@ int DutyManager(manager myManager)
 
     switch (myManager.currentTask)
     {
-        case FREE:
-            FreeMemory(myFigure);
-            break;
         case LOAD_FILE:
             codeError = LoadModelFromFile(myFigure, myManager.load.filename);
             break;
         case PAINT:
-            DrawFigure(myFigure, myManager.view);
+            codeError = DrawFigure(myFigure, myManager.view);
             break;
         case MOVE:
             codeError = MoveFigure(myFigure, myManager.move);
@@ -24,6 +21,9 @@ int DutyManager(manager myManager)
             break;
         case TURN:
             codeError = TurnFigure(myFigure, myManager.turn);
+            break;
+        case FREE:
+            FreeMemory(myFigure);
             break;
         default:
             codeError = ERROR_COMMAND;

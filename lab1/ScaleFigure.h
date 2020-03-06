@@ -3,6 +3,7 @@
 
 #include "ErrorMessages.h"
 #include "InputCoords.h"
+#include "Figure.h"
 
 struct scale
 {
@@ -11,7 +12,7 @@ struct scale
     double kz;
 };
 
-int ScalePointsArray(figure myFigure, scale coeff);
+int ScalePointsArray(point *arrayStructpoints, int amountDots, scale value);
 void ScalePoint(point &structPoint, scale coeff);
 int ScaleFigure(figure &myFigure, scale value);
 

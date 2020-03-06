@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 #include "InputCoords.h"
+#include "InputLinks.h"
+#include "Figure.h"
 #include "ErrorMessages.h"
 
 int PointsAlloc(pointsData &points, linksData &links);
