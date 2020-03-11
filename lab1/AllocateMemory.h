@@ -9,6 +9,7 @@
 
 int PointsAlloc(pointsData &points, linksData &links);
 void PointsFree(pointsData &points, linksData &links);
-void FreeMemory(figure &Myfigure);
+void FreeMemory(figure &myfigure);
+void FreePreviousFigure(figure &myFigure);
 
 #endif // ALLOCATEMEMORY_H

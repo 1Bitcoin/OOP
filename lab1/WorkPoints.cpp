@@ -1,13 +1,13 @@
 #include "WorkPoints.h"
 
-void DrawLinks(figure myFigure, graphView drawInfo, scene canvas)
+void DrawLinks(pointsData &points, linksData &links, graphView &drawInfo, scene &canvas)
 {
     coordPoint firstPoint, secondPoint;
 
-    for (int i = 0; i < myFigure.links.amountLinks; i++)
+    for (int i = 0; i < links.amountLinks; i++)
     {
-        firstPoint = GetDot(myFigure.points.arrayStructpoints, myFigure.links.arrayStructlinks[i].from - 1);
-        secondPoint = GetDot(myFigure.points.arrayStructpoints, myFigure.links.arrayStructlinks[i].to - 1);
+        firstPoint = GetDot(points.arrayStructpoints, links.arrayStructlinks[i].from - 1);
+        secondPoint = GetDot(points.arrayStructpoints, links.arrayStructlinks[i].to - 1);
 
         firstPoint = PointTransform(firstPoint, drawInfo);
         secondPoint = PointTransform(secondPoint, drawInfo);
@@ -22,7 +22,7 @@ coordPoint GetDot(point *arrayPoints, int number)
     return dot;
 }
 
-coordPoint PointTransform(coordPoint structPoint, graphView drawInfo)
+coordPoint PointTransform(coordPoint &structPoint, graphView &drawInfo)
 {
     structPoint.z = sqrt(2)/2 * structPoint.z;
 

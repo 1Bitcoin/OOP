@@ -43,6 +43,9 @@ int LoadModelFromFile(figure &myFigure, const char *filename)
         codeError = ReadCount(myFigure, file);
 
     if (!codeError)
+        FreePreviousFigure(myFigure);
+
+    if (!codeError)
         codeError = PointsAlloc(myFigure.points, myFigure.links);
 
     if (codeError == ERROR_ALLOC_MEMORY)

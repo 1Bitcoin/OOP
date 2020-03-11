@@ -20,7 +20,7 @@ void TurnOX(point &structPoint, double angle);
 void TurnOY(point &structPoint, double angle);
 void TurnOZ(point &structPoint, double angle);
 
-int TurnPointsArray(point *arrayStructpoints, int amountDots, turn coeff);
-int TurnFigure(figure &Myfigure, turn value);
+int TurnPointsArray(point *arrayStructpoints, int amountDots, turn &coeff);
+int TurnFigure(figure &myFigure, turn &value);
 
 #endif // TURNFIGURE_H

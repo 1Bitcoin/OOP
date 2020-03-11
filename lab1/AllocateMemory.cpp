@@ -28,7 +28,12 @@ void PointsFree(pointsData &points, linksData &links)
         free(links.arrayStructlinks);
 }
 
-void FreeMemory(figure &Myfigure)
+void FreeMemory(figure &myFigure)
 {
-    PointsFree(Myfigure.points, Myfigure.links);
+    PointsFree(myFigure.points, myFigure.links);
+}
+
+void FreePreviousFigure(figure &myFigure)
+{
+    FreeMemory(myFigure);
 }

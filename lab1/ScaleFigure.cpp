@@ -1,13 +1,13 @@
 #include "ScaleFigure.h"
 
-void ScalePoint(point &structPoint, scale value)
+void ScalePoint(point &structPoint, scale &value)
 {
     structPoint.x *= value.kx;
     structPoint.y *= value.ky;
     structPoint.z *= value.kz;
 }
 
-int ScalePointsArray(point *arrayStructpoints, int amountDots, scale value)
+int ScalePointsArray(point *arrayStructpoints, int amountDots, scale &value)
 {
     int codeError = OK;
 
@@ -20,7 +20,7 @@ int ScalePointsArray(point *arrayStructpoints, int amountDots, scale value)
     return codeError;
 }
 
-int ScaleFigure(figure &myFigure, scale value)
+int ScaleFigure(figure &myFigure, scale &value)
 {
     return ScalePointsArray(myFigure.points.arrayStructpoints, myFigure.points.amountDots, value);
 }

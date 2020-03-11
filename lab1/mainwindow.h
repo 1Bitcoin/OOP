@@ -2,10 +2,18 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "ErrorMessages.h"
 #include "InputLinks.h"
 #include "QtForDrawing.h"
 #include "DutyManager.h"
+#include "ui_mainwindow.h"
+#include "InputCoords.h"
+#include "QtForDrawing.h"
+#include "ScaleFigure.h"
+#include "MoveFigure.h"
+#include "TurnFigure.h"
+#include "LoadModel.h"
+#include "AllocateMemory.h"
+#include "ErrorMessages.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -1,14 +1,4 @@
-#include "ErrorMessages.h"
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "InputCoords.h"
-#include "QtForDrawing.h"
-#include "ScaleFigure.h"
-#include "MoveFigure.h"
-#include "TurnFigure.h"
-#include "LoadModel.h"
-#include "AllocateMemory.h"
-#include "DutyManager.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

@@ -12,8 +12,8 @@ struct scale
     double kz;
 };
 
-int ScalePointsArray(point *arrayStructpoints, int amountDots, scale value);
-void ScalePoint(point &structPoint, scale coeff);
-int ScaleFigure(figure &myFigure, scale value);
+int ScalePointsArray(point *arrayStructpoints, int amountDots, scale &value);
+void ScalePoint(point &structPoint, scale &coeff);
+int ScaleFigure(figure &myFigure, scale &value);
 
 #endif // SCALEFIGURE_H

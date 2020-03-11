@@ -18,7 +18,7 @@ struct scene
     QPen pen;
 };
 
-int DrawFigure(figure myFigure, graphView drawInfo);
+int DrawFigure(figure &myFigure, graphView &drawInfo);
 void CanvasPlace(QGraphicsView *graphView, scene &canvas);
 int SceneInit(scene &canvas, QGraphicsView *graphView);
 
