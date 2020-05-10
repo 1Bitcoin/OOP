@@ -13,7 +13,13 @@ int main() {
 
     Iterator<double> iterator = vec0.begin();
 
-    try 
+    Vector<int> test1 = {228, 2228, 1137};
+
+    const Iterator<int> iterator1 = test1.begin();
+
+    std::cout << *iterator1;
+
+    try
 	{
         Vector<double> vec(data);
         const Vector<double> vec2(vec);
@@ -37,7 +43,7 @@ int main() {
             std::cout << "vec == vec2" << std::endl;
 
         double sum = vec3*vec4;
-        //std::cout << data32 << std::endl;
+
         std::cout << std::endl << "Sum = " << sum << "\n" << vec << vec2 << vec3 << vec4 << vec5 << vec6 << vec7 << "\n" << "\nIterator 1 on: " << *it1 << "\n" << std::endl;
 
         *it1 = 100;

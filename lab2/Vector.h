@@ -18,9 +18,9 @@ private:
 public:
     friend class Iterator<DataType>;
 
-    Vector(const std::vector<DataType> &data);
     Vector();
-    Vector(DataType* data);
+    Vector(const std::vector<DataType> &data);
+    Vector(size_t count, DataType* data);
     Vector(std::initializer_list<DataType> data);
     Vector(const Vector<DataType> &other); //explicit
     Vector(Vector<DataType> &&other);

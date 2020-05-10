@@ -3,14 +3,22 @@
 #include <math.h>
 #include <memory>
 #include <time.h>
+#include <cstdlib>
 
 #include "Vector.h"
 #include "Errors.h"
 
+#define EPS 1e-5
 
 template<typename DataType>
 Vector<DataType> Vector<DataType>::norm() const
 {
+    if (!length())
+    {
+        time_t t_time = time(NULL);
+        throw DivisionByZeroError(__FILE__, __LINE__, ctime(&t_time));
+    }
+
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] = coords.get()[i] / length();
     return *this;
@@ -21,11 +29,18 @@ DataType Vector<DataType>::angle(const Vector<DataType> &other) const
 {
     DataType angle = 1;
 	time_t t_time = time(NULL);	
+
     if (size() != other.size()) {
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
     }
+
+    if (!size() || !other.size()){
+        throw EmptyError(__FILE__, __LINE__, ctime(&t_time));
+    }
+
     for (int i = 0; i < size(); i++)
         angle = angle + (coords.get()[i] * other.coords.get()[i]);
+
     return angle / (length() * other.length());
 }
 
@@ -33,10 +48,10 @@ template<typename DataType>
 Vector<DataType>::Vector(const std::vector<DataType> &data)
 {
     setSize(data.size());
-    coords = std::shared_ptr<DataType>((DataType *)malloc(data.size() * sizeof(DataType)), free);
+    std::shared_ptr<DataType> coords(new DataType[data.size()], std::default_delete<DataType[]>());
     
-	time_t t_time = time(NULL);
     if (coords.get() == nullptr) {
+        time_t t_time = time(NULL);
 		throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
     }
     
@@ -45,17 +60,17 @@ Vector<DataType>::Vector(const std::vector<DataType> &data)
 }
 
 template<typename DataType>
-Vector<DataType>::Vector(DataType* data)
+Vector<DataType>::Vector(size_t count, DataType* data)
 {
-    setSize(data->size());
-    coords = std::shared_ptr<DataType>((DataType *)malloc(data->size() * sizeof(DataType)), free);
+    setSize(count);
+    std::shared_ptr<DataType> coords(new DataType[count], std::default_delete<DataType[]>());
 
-	time_t t_time = time(NULL);
     if (coords.get() == nullptr) {
-		throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
+        time_t t_time = time(NULL);
+        throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
     }
-    
-    for (size_t i = 0; i < data->size(); i++)
+
+    for (size_t i = 0; i < count; i++)
         coords.get()[i] = data[i];
 }
 
@@ -63,10 +78,10 @@ template<typename DataType>
 Vector<DataType>::Vector()
 {
     setSize(0);
-    coords = std::shared_ptr<DataType>((DataType *)malloc(0 * sizeof(DataType)), free);
-	time_t t_time = time(NULL);
+    std::shared_ptr<DataType> coord = nullptr;
 
     if (coords.get() == nullptr) {
+        time_t t_time = time(NULL);
 		throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -75,17 +90,8 @@ Vector<DataType>::Vector()
 template<typename DataType>
 Vector<DataType>::Vector(Vector<DataType> &&other)
 {
-    setSize(other.size());
-    coords = std::shared_ptr<DataType>((DataType *)malloc(other.size() * sizeof(DataType)), free);
-	time_t t_time = time(NULL);
-
-    if (coords.get() == nullptr) {
-		throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
-
-    }
-    
-    for (size_t i = 0; i < other.size(); i++)
-        coords.get()[i] = other[i];
+    this->coords = other.coords;
+    this->setSize(other.size());
     other.coords = nullptr;
     other.resize(0);
 }
@@ -94,10 +100,10 @@ template<typename DataType>
 Vector<DataType>::Vector(size_t size)
 {
     setSize(size);
-    coords = std::shared_ptr<DataType>((DataType *)malloc(size * sizeof(DataType)), free);
-	time_t t_time = time(NULL);
+    std::shared_ptr<DataType> coords(new DataType[size], std::default_delete<DataType[]>());
 
     if (coords.get() == nullptr) {
+        time_t t_time = time(NULL);
 		throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -111,13 +117,13 @@ Vector<DataType>::Vector(std::initializer_list<DataType> data)
 {
     setSize(data.size());
     coords = std::shared_ptr<DataType>((DataType *)malloc(data.size() * sizeof(DataType)), free);
-	time_t t_time = time(NULL);
+    time_t t_time = time(NULL);
 
     if (coords.get() == nullptr) {
-		throw MemoryError(__FILE__,  __LINE__, ctime(&t_time));
+        throw MemoryError(__FILE__,  __LINE__, ctime(&t_time));
 
     }
-    
+
     size_t i = 0;
     for(auto& coord : data)
     {
@@ -134,13 +140,13 @@ Vector<DataType>::Vector(const Vector<DataType> &other)
                                         {
                                             free(rawCoords);
                                         });
-	time_t t_time = time(NULL);
+    time_t t_time = time(NULL);
 
     if (coords.get() == nullptr) {
-		throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
+        throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
 
     }
-    
+
     for (size_t i = 0; i < other.size(); i++)
         coords.get()[i] = other[i];
 }
@@ -150,44 +156,33 @@ Vector<DataType>::~Vector()
 {
 }
 
-//template<typename DataType>
-//void Vector<DataType>::resize(size_t newSize)
-//{
-//    VectorBase::resize(newSize);
-//    coords = (DataType *)realloc(coords, newSize * sizeof(DataType));
-//
-//    if (coords == NULL) {
-//        throw MemoryError();
-//    }
-//}
-
 template<typename DataType>
 Vector<DataType> & Vector<DataType>::operator += (const Vector<DataType> &other)
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
-		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
+        time_t t_time = time(NULL);
+        throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
-    
+
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] += other.coords.get()[i];
+
     return *this;
 }
 
 template<typename DataType>
 Vector<DataType> & Vector<DataType>::operator -= (const Vector<DataType> &other)
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
     
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] -= other.coords.get()[i];
+
     return *this;
 }
 
@@ -196,50 +191,51 @@ Vector<DataType> & Vector<DataType>::operator *= (DataType k)
 {
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] *= k;
+
     return *this;
 }
 
 template<typename DataType>
 Vector<DataType> Vector<DataType>::vectorMult (const Vector<DataType> &other) const
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
 
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] *= other.coords.get()[i];
+
     return *this;
 }
 
 template<typename DataType>
 Vector<DataType> & Vector<DataType>::operator /= (DataType k)
 {
-	time_t t_time = time(NULL);
-
-    if (k == 0.) {
+    if (abs(k) < EPS) {
+        time_t t_time = time(NULL);
 		throw DivisionByZeroError(__FILE__, __LINE__, ctime(&t_time));
 
     }
     
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] /= k;
+
     return *this;
 }
 
 template<typename DataType>
 bool Vector<DataType>::operator == (const Vector<DataType> &other) const
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
     
     bool equal = true;
+
     for (size_t i = 0; i < size(); i++) {
         if (coords.get()[i] != other.coords.get()[i]) {
             equal = false;
@@ -253,9 +249,8 @@ bool Vector<DataType>::operator == (const Vector<DataType> &other) const
 template<typename DataType>
 bool Vector<DataType>::operator != (const Vector<DataType> &other) const
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -266,9 +261,8 @@ bool Vector<DataType>::operator != (const Vector<DataType> &other) const
 template<typename DataType>
 bool Vector<DataType>::operator >= (const Vector<DataType> &other) const
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -279,40 +273,45 @@ bool Vector<DataType>::operator >= (const Vector<DataType> &other) const
 template<typename DataType>
 bool Vector<DataType>::ort(const Vector<DataType> &other) const
 {
-	time_t t_time = time(NULL);
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
+
     DataType sum = 0;
+
     for (size_t i = 0; i < size(); i++)
-        sum += this->coords.get()[i]*other.coords.get()[i];
+        sum += this->coords.get()[i] * other.coords.get()[i];
+
     return (sum == 0);
 }
 
 template<typename DataType>
 DataType Vector<DataType>::operator * (const Vector<DataType> &other) const
-{
-	time_t t_time = time(NULL);
+{;
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
+
     DataType sum = 0;
     for (size_t i = 0; i < size(); i++)
         sum += coords.get()[i] * other.coords.get()[i];
+
     return sum;
 }
 
 template<typename DataType>
 bool Vector<DataType>::operator <= (const Vector<DataType> &other) const
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
+
     return length() <= other.length();
 }
 
@@ -323,6 +322,7 @@ DataType Vector<DataType>::length() const
 
     for (size_t i = 0; i < size(); i++)
         sum += coords.get()[i] * coords.get()[i];
+
     sum = sqrt(sum);
 
     return sum;
@@ -331,9 +331,8 @@ DataType Vector<DataType>::length() const
 template<typename DataType>
 Vector<DataType> & Vector<DataType>::operator = (const Vector<DataType> &other)
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -345,34 +344,32 @@ Vector<DataType> & Vector<DataType>::operator = (const Vector<DataType> &other)
 }
 
 template<typename DataType>
-Vector<DataType> & Vector<DataType>::operator = (Vector<DataType> &&other)
+Vector<DataType>& Vector<DataType>::operator = (Vector<DataType> &&other)
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
     
-    for (size_t i = 0; i < size(); i++)
-        this->coords.get()[i] = other.coords.get()[i];
-    
+    this->coords = other.coords;
+    this->setSize(other.size());
     other.coords = nullptr;
     other.resize(0);
+
     return *this;
 }
 
 template<typename DataType>
 Vector<DataType> & Vector<DataType>::operator = (std::initializer_list<DataType> data)
 {
-	time_t t_time = time(NULL);
-
     if (size() != data.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
     
-    int i = 0;
+    size_t i = 0;
     for(auto& coord : data)
     {
         coords.get()[i] = coord;
@@ -385,9 +382,8 @@ Vector<DataType> & Vector<DataType>::operator = (std::initializer_list<DataType>
 template<typename DataType>
 Vector<DataType> Vector<DataType>::operator +(const Vector<DataType> &other) const
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -403,9 +399,8 @@ Vector<DataType> Vector<DataType>::operator +(const Vector<DataType> &other) con
 template<typename DataType>
 Vector<DataType> Vector<DataType>::operator - (const Vector<DataType> &other) const
 {
-	time_t t_time = time(NULL);
-
     if (size() != other.size()) {
+        time_t t_time = time(NULL);
 		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -418,7 +413,7 @@ Vector<DataType> Vector<DataType>::operator - (const Vector<DataType> &other) co
 }
 
 template<typename DataType>
-inline Vector<DataType> Vector<DataType>::operator-() const
+Vector<DataType> Vector<DataType>::operator-() const
 {
 	return Vector<DataType>();
 }
@@ -426,14 +421,14 @@ inline Vector<DataType> Vector<DataType>::operator-() const
 template<typename DataType>
 Vector<DataType> Vector<DataType>::operator / (DataType k) const
 {
-	time_t t_time = time(NULL);
-
-    if (k == 0.) {
+    if (abs(k) < EPS) {
+        time_t t_time = time(NULL);
 		throw DivisionByZeroError(__FILE__, __LINE__, ctime(&t_time));
 
     }
     
     Vector<DataType> tmp(*this);
+
     return tmp /= k;
 }
 
@@ -441,6 +436,7 @@ template<typename DataType>
 Vector<DataType> Vector<DataType>::operator *(DataType k) const
 {
     Vector<DataType> tmp(*this);
+
     return tmp *= k;
 }
 
@@ -454,16 +450,14 @@ Vector<DataType> Vector<DataType>::operator -()
 template<typename DataType>
 Vector<DataType> Vector<DataType>::operator +()
 {
-    Vector<DataType> tmp(*this);
-    return tmp *= 1;
+    return Vector<DataType>();
 }
 
 template<typename DataType>
-DataType & Vector<DataType>::operator [](std::size_t i)
+DataType& Vector<DataType>::operator [](std::size_t i)
 {
-	time_t t_time = time(NULL);
-
     if ((i < 0) || (i >= size())) {
+        time_t t_time = time(NULL);
 		throw BoundariesError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -473,9 +467,8 @@ DataType & Vector<DataType>::operator [](std::size_t i)
 template<typename DataType>
 const DataType & Vector<DataType>::operator [](std::size_t i) const
 {
-	time_t t_time = time(NULL);
-
     if ((i < 0) || (i >= size())) {
+        time_t t_time = time(NULL);
 		throw BoundariesError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -499,13 +492,11 @@ Iterator<DataType> Vector<DataType>::end()
 template <typename DataType>
 IteratorConst<DataType> Vector<DataType>::begin() const
 {
-    return IteratorConst<DataType>(coords.get());
+    return IteratorConst<DataType>(*this);
 }
 
 template <typename DataType>
 IteratorConst<DataType> Vector<DataType>::end() const
 {
-    return IteratorConst<DataType>(coords + size());
+    return IteratorConst<DataType>(*this + size());
 }
-
-

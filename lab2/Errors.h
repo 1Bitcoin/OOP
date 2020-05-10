@@ -61,14 +61,6 @@ public:
 		std::string info = "Memory error") : CommonError(filename, line, time, info) {};
 };
 
-class WeakPointerError : public CommonError
-{
-public:
-	WeakPointerError(std::string filename, int line, const char *time,
-		std::string info = "Weak pointer is invalid") :
-		CommonError(filename, line, time, info) {};
-};
-
 class DeletedObj : public CommonError
 {
 public:
