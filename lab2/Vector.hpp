@@ -486,14 +486,14 @@ const DataType & Vector<DataType>::operator [](std::size_t i) const
 template <typename DataType>
 Iterator<DataType> Vector<DataType>::begin()
 {
-    Iterator<DataType> it(coords);
+    Iterator<DataType> it(*this);
     return it;
 }
 
 template <typename DataType>
 Iterator<DataType> Vector<DataType>::end()
 {
-    return Iterator<DataType>(coords, size());
+    return Iterator<DataType>(*this, size());
 }
 
 template <typename DataType>

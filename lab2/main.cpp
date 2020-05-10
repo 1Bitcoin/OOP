@@ -7,7 +7,7 @@ int main() {
     
     Vector<double> data = { 1., 2., 3., 4., 5., 6., 7., 8., 9. };
 
-    Vector<int> data32(Vector<double> data2 = { 1.55, 2.32 });
+    //Vector<int> data32(Vector<double> data2 = { 1.55, 2.32 });
 
     Vector<double> vec0(data);
 

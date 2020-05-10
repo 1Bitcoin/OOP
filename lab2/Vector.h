@@ -12,7 +12,12 @@
 template<typename DataType>
 class Vector : public VectorBase
 {
+private:
+    std::shared_ptr<DataType> coords;
+
 public:
+    friend class Iterator<DataType>;
+
     Vector(const std::vector<DataType> &data);
     Vector();
     Vector(DataType* data);
@@ -36,13 +41,14 @@ public:
     IteratorConst<DataType> begin() const;
     IteratorConst<DataType> end() const;
 
-	Vector<DataType> & operator =(const Vector<DataType> &other);
-	Vector<DataType> & operator =(Vector<DataType> &&other);
-	Vector<DataType> & operator =(std::initializer_list<DataType> data);
-	Vector<DataType> & operator +=(const Vector<DataType> &other);
-	Vector<DataType> & operator -=(const Vector<DataType> &other);
-	Vector<DataType> & operator *=(DataType k);
-	Vector<DataType> & operator /=(DataType k);
+    Vector<DataType>& operator =(const Vector<DataType> &other);
+    Vector<DataType>& operator =(Vector<DataType> &&other);
+    Vector<DataType>& operator =(std::initializer_list<DataType> data);
+
+    Vector<DataType>& operator +=(const Vector<DataType> &other);
+    Vector<DataType>& operator -=(const Vector<DataType> &other);
+    Vector<DataType>& operator *=(DataType k);
+    Vector<DataType>& operator /=(DataType k);
 
 	bool operator == (const Vector<DataType> &other) const;
 	bool operator != (const Vector<DataType> &other) const;
@@ -60,9 +66,6 @@ public:
 
 	DataType & operator [] (std::size_t i);
 	const DataType & operator [] (std::size_t i) const;
-
-private:
-	std::shared_ptr<DataType> coords;
 };
 
 template<class DataType>
