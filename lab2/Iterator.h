@@ -49,17 +49,17 @@ public:
 template <typename DataType>
 Iterator<DataType>::Iterator(const Vector<DataType>& vec, size_t index)
 {
-    num_elem = vec.size();
-    ptr = vec.coords;
-    position = index;
+    this->num_elem = vec._size;
+    this->ptr = vec.coords;
+    this->position = index;
 }
 
 template <typename DataType>
 Iterator<DataType>::Iterator(const Iterator<DataType>& iter)
 {
-    ptr = iter.ptr;
-    position = iter.position;
-    num_elem = iter.num_elem;
+    this->ptr = iter.ptr;
+    this->position = iter.position;
+    this->num_elem = iter.num_elem;
 }
 
 template <typename DataType>
@@ -160,7 +160,9 @@ Iterator<DataType>::operator bool() const
 {
     control(__LINE__);
 
-    if (position >= num_elem || position < 0 || (num_elem == 0))
+    auto thisPtr = this->num_elem.lock();
+
+    if (position >= *thisPtr || position < 0 || (*thisPtr == 0))
         return false;
     else
         return true;

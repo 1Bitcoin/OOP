@@ -98,7 +98,8 @@ IteratorConst<DataType>::operator bool() const
 {
     control(__LINE__);
 
-    if (position >= num_elem || position < 0 || (num_elem == 0))
+    auto thisPtr = this->num_elem.lock();
+    if (position >= *thisPtr || position < 0 || (*thisPtr == 0))
         return false;
     else
         return true;

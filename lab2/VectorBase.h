@@ -2,17 +2,32 @@
 #define VectorBase_h
 
 #include <stdio.h>
+#include <memory>
 
 class VectorBase
-{
-private:
-    size_t _size = 0;
+{ 
 protected:
-    void setSize(size_t newSize) { _size = newSize; };
+    std::shared_ptr<size_t> _size;
+    void setSize(size_t newSize);
 public:
-    virtual size_t size() const { return _size; };
-    virtual void resize(size_t newSize) { setSize(newSize); };
+    VectorBase(size_t size = 0) { _size = std::shared_ptr<size_t>(new size_t(size)); }
+    virtual size_t size() const;
+    virtual void resize(size_t newSize);
 };
 
+void VectorBase::setSize(size_t newSize)
+{
+    *_size = newSize; // nullptr??
+}
+
+size_t VectorBase::size() const
+{
+    return bool(_size) ? *_size : 0;
+}
+
+void VectorBase::resize(size_t newSize)
+{
+    setSize(newSize);
+}
 
 #endif /* VectorBase_h */
