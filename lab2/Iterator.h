@@ -92,6 +92,7 @@ DataType* Iterator<DataType>::operator->()
 
 	DataType *rawData = thisPtr.get();
 	DataType *pointedData = rawData + this->position;
+
 	return pointedData;
 }
 
@@ -103,6 +104,7 @@ const DataType* Iterator<DataType>::operator->() const
 
 	DataType *rawData = thisPtr.get();
 	DataType *pointedData = rawData + this->position;
+
 	return pointedData;
 }
 
@@ -111,9 +113,10 @@ Iterator<DataType>& Iterator<DataType>::operator=(const Iterator<DataType>& iter
 {
     control(__LINE__);
 
-    ptr = iter.ptr;
-    position = iter.position;
-    num_elem = iter.num_elem;
+    this->ptr = iter.ptr;
+    this->position = iter.position;
+    this->num_elem = iter.num_elem;
+
     return *this;
 }
 
@@ -123,6 +126,7 @@ Iterator<DataType>& Iterator<DataType>::operator++()
     control(__LINE__);
 
     ++position;
+
     return *this;
 }
 

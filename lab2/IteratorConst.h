@@ -55,17 +55,17 @@ public:
 template <typename DataType>
 IteratorConst<DataType>::IteratorConst(const Vector<DataType>& vec, size_t index)
 {
-    num_elem = vec.num_elem;
-    ptr = vec.coords;
-    position = index;
+    this->num_elem = vec._size;
+    this->ptr = vec.coords;
+    this->position = index;
 }
 
 template <typename DataType>
 IteratorConst<DataType>::IteratorConst(const IteratorConst<DataType>& iter)
 {
-    ptr = iter.ptr;
-    position = iter.index;
-    num_elem = iter.num_elem;
+    this->ptr = iter.ptr;
+    this->position = iter.position;
+    this->num_elem = iter.num_elem;
 }
 
 template <typename DataType>
