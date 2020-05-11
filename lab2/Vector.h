@@ -66,6 +66,8 @@ public:
 
 	DataType & operator [] (std::size_t i);
 	const DataType & operator [] (std::size_t i) const;
+
+    void new_memory(size_t num_elements);
 };
 
 template<class DataType>

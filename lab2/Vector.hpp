@@ -21,6 +21,7 @@ Vector<DataType> Vector<DataType>::norm() const
 
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] = coords.get()[i] / length();
+
     return *this;
 }
 
@@ -48,7 +49,7 @@ template<typename DataType>
 Vector<DataType>::Vector(const std::vector<DataType> &data)
 {
     setSize(data.size());
-    std::shared_ptr<DataType> coords(new DataType[data.size()], std::default_delete<DataType[]>());
+    new_memory(data.size());
     
     if (coords.get() == nullptr) {
         time_t t_time = time(NULL);
@@ -63,7 +64,7 @@ template<typename DataType>
 Vector<DataType>::Vector(size_t count, DataType* data)
 {
     setSize(count);
-    std::shared_ptr<DataType> coords(new DataType[count], std::default_delete<DataType[]>());
+    new_memory(count);
 
     if (coords.get() == nullptr) {
         time_t t_time = time(NULL);
@@ -78,13 +79,8 @@ template<typename DataType>
 Vector<DataType>::Vector()
 {
     setSize(0);
-    std::shared_ptr<DataType> coord = nullptr;
-
-    if (coords.get() == nullptr) {
-        time_t t_time = time(NULL);
-		throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
-
-    }
+    coords.reset();
+    std::shared_ptr<DataType> coords = nullptr;
 }
 
 template<typename DataType>
@@ -100,7 +96,8 @@ template<typename DataType>
 Vector<DataType>::Vector(size_t size)
 {
     setSize(size);
-    std::shared_ptr<DataType> coords(new DataType[size], std::default_delete<DataType[]>());
+
+    new_memory(size);
 
     if (coords.get() == nullptr) {
         time_t t_time = time(NULL);
@@ -108,18 +105,20 @@ Vector<DataType>::Vector(size_t size)
 
     }
     
-    for (size_t i = 0; i < size; i++)
-        coords.get()[i] = 0;
+    Iterator<DataType> iter(*this);
+    for (; iter; iter++)
+        *iter = 0;
 }
 
 template<typename DataType>
 Vector<DataType>::Vector(std::initializer_list<DataType> data)
 {
     setSize(data.size());
-    coords = std::shared_ptr<DataType>((DataType *)malloc(data.size() * sizeof(DataType)), free);
-    time_t t_time = time(NULL);
+
+    new_memory(data.size());
 
     if (coords.get() == nullptr) {
+        time_t t_time = time(NULL);
         throw MemoryError(__FILE__,  __LINE__, ctime(&t_time));
 
     }
@@ -136,13 +135,10 @@ template<typename DataType>
 Vector<DataType>::Vector(const Vector<DataType> &other)
 {
     setSize(other.size());
-    coords =  std::shared_ptr<DataType>((DataType *)malloc(other.size() * sizeof(DataType)), [=](DataType *rawCoords)
-                                        {
-                                            free(rawCoords);
-                                        });
-    time_t t_time = time(NULL);
+    new_memory(other.size());
 
     if (coords.get() == nullptr) {
+        time_t t_time = time(NULL);
         throw MemoryError(__FILE__, __LINE__, ctime(&t_time));
 
     }
@@ -499,4 +495,12 @@ template <typename DataType>
 IteratorConst<DataType> Vector<DataType>::end() const
 {
     return IteratorConst<DataType>(*this + size());
+}
+
+template <typename DataType>
+void Vector<DataType>::new_memory(size_t num_elements)
+{
+    coords.reset();
+    std::shared_ptr<DataType> temp(new DataType[num_elements], std::default_delete<DataType[]>());
+    coords = temp;
 }
