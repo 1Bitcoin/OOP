@@ -14,7 +14,7 @@ template<class DataType>
 class Vector;
 
 template <typename DataType>
-class Iterator : public IteratorBase
+class Iterator : public IteratorBase, public std::iterator <std::input_iterator_tag, DataType>
 {
 public:
 	Iterator(const Iterator<DataType>& iter);

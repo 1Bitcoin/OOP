@@ -10,11 +10,13 @@ public:
 	IteratorBase(size_t size = 0) {  position = 0; }
 	IteratorBase(const IteratorBase& iter) { this->num_elem = iter.num_elem; this->position = iter.position; }
 
-	virtual ~IteratorBase() {};
+	virtual ~IteratorBase() = 0;
 
 protected:
     std::weak_ptr<size_t> num_elem;
     size_t position = 0;
 };
+
+IteratorBase::~IteratorBase() {};
 
 #endif /* IteratorBase_h */

@@ -16,12 +16,11 @@ template<class Type>
 class Vector;
 
 template <typename DataType>
-class IteratorConst : public IteratorBase
+class IteratorConst : public IteratorBase, public std::iterator <std::input_iterator_tag, DataType>
 {
 public:
     IteratorConst(const IteratorConst<DataType>& iter);
     IteratorConst(const Vector<DataType>& vec, size_t index = 0);
-
 
     const DataType& operator*() const;
     const DataType *operator->() const;

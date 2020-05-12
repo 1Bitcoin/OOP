@@ -17,7 +17,7 @@ public:
 	friend class IteratorConst<DataType>;
 
     Vector();
-	explicit Vector(size_t size); // explicit
+	explicit Vector(size_t size);
     Vector(const std::vector<DataType> &data);
     Vector(size_t count, DataType* data);
     Vector(std::initializer_list<DataType> data);
@@ -26,13 +26,32 @@ public:
 
 	virtual ~Vector(); // override // err
 
-	DataType length() const;
-	void norm();
-	DataType angle(const Vector<DataType> &other) const;
-	Vector<DataType> vectorMult(const Vector<DataType> &other) const;
+	Vector<DataType>& operator =(const Vector<DataType> &other);
+	Vector<DataType>& operator =(Vector<DataType> &&other);
+	Vector<DataType>& operator =(std::initializer_list<DataType> data);
+	Vector<DataType>& operator =(const std::vector<DataType> &data);
 
+	DataType length() const;
+	DataType& operator [](std::size_t i);
+	const DataType& operator [](std::size_t i) const;
+
+	void norm();
+	Vector<DataType>& operator *=(DataType k);
+	Vector<DataType>& operator /=(DataType k);
+	Vector<DataType> operator *(DataType k) const;
+	Vector<DataType> operator /(DataType k) const;
+	Vector<DataType> operator -() const;
+	Vector<DataType> operator +() const;
+
+	DataType operator *(const Vector<DataType> &other) const;
+	Vector<DataType>& operator +=(const Vector<DataType> &other);
+	Vector<DataType>& operator -=(const Vector<DataType> &other);
+	Vector<DataType> operator +(const Vector<DataType> &other) const;
+	Vector<DataType> operator -(const Vector<DataType> &other) const;
+
+	DataType angle(const Vector<DataType> &other) const;
 	bool ort(const Vector<DataType> &other) const;
-    DataType operator *(const Vector<DataType> &other) const;
+	bool collinear(const Vector<DataType>& vec) const;
 
 	Iterator<DataType> begin();
 	Iterator<DataType> end();
@@ -43,30 +62,10 @@ public:
     IteratorConst<DataType> const cbegin() const;
     IteratorConst<DataType> const cend() const;
 
-    Vector<DataType>& operator =(const Vector<DataType> &other);
-    Vector<DataType>& operator =(Vector<DataType> &&other);
-    Vector<DataType>& operator =(std::initializer_list<DataType> data);
-	Vector<DataType>& operator =(const std::vector<DataType> &data);
-
-    Vector<DataType>& operator +=(const Vector<DataType> &other);
-    Vector<DataType>& operator -=(const Vector<DataType> &other);
-    Vector<DataType>& operator *=(DataType k);
-    Vector<DataType>& operator /=(DataType k);
-
 	bool operator ==(const Vector<DataType> &other) const;
 	bool operator !=(const Vector<DataType> &other) const;
 	bool operator >=(const Vector<DataType> &other) const;
 	bool operator <=(const Vector<DataType> &other) const;
-
-	Vector<DataType> operator *(DataType k) const;
-	Vector<DataType> operator /(DataType k) const;
-	Vector<DataType> operator +(const Vector<DataType> &other) const;
-	Vector<DataType> operator -(const Vector<DataType> &other) const;
-	Vector<DataType> operator -() const;
-	Vector<DataType> operator +() const;
-
-	DataType& operator [](std::size_t i);
-	const DataType& operator [](std::size_t i) const;
 
     void new_memory(size_t num_elements);
 

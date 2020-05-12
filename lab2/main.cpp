@@ -42,9 +42,12 @@ int main() {
 	std::cout << a << "\n";
 
 	/////////////
-	Vector<int> vec(std::vector<int> { 227, 125, 1612, 8888 });
+	Vector<int> vec(std::vector<int> { 227, 125, 1612 });
 
 	Vector<int> vec2({1, 2, 3});
+
+	std::cout << "Collinear?: \n";
+	std::cout << vec.collinear(vec2) << "\n";
 
 	std::cout << vec << "\n";
 
@@ -54,6 +57,11 @@ int main() {
     double arr[5] = {5, 1, 7, 4, 0};
     Vector<double> v4(5, arr);
     std::cout << v4 << "\n";
+
+	std::cout << "test -: \n";
+	-v4;
+	std::cout << v4 << "\n";
+
 
     //Vector<int> data32(Vector<double> data2 = { 1.55, 2.32 });
 

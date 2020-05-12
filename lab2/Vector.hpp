@@ -24,6 +24,15 @@ void Vector<DataType>::norm()
 }
 
 template<typename DataType>
+bool Vector<DataType>::collinear(const Vector<DataType>& vec) const
+{
+	if (angle(vec) < EPS)
+		return true;
+	else
+		return false;
+}
+
+template<typename DataType>
 DataType Vector<DataType>::angle(const Vector<DataType> &other) const
 {
     DataType angle = 1;
@@ -184,21 +193,6 @@ Vector<DataType> & Vector<DataType>::operator *= (DataType k)
 {
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] *= k;
-
-    return *this;
-}
-
-template<typename DataType>
-Vector<DataType> Vector<DataType>::vectorMult (const Vector<DataType> &other) const
-{
-    if (size() != other.size()) {
-        time_t t_time = time(NULL);
-		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
-
-    }
-
-    for (size_t i = 0; i < size(); i++)
-        coords.get()[i] *= other.coords.get()[i];
 
     return *this;
 }
@@ -417,6 +411,9 @@ Vector<DataType> Vector<DataType>::operator - (const Vector<DataType> &other) co
 template<typename DataType>
 Vector<DataType> Vector<DataType>::operator-() const
 {
+	for (size_t i = 0; i < size(); i++)
+		this->coords.get()[i] -= this->coords.get()[i];
+
 	return Vector<DataType>();
 }
 
