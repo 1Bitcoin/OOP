@@ -11,15 +11,15 @@ public:
 	CommonError(std::string filename, int line, const char *time,
 		std::string info = "Error")
 	{
-		err_info = "\nFile name: " + filename + "\nLine#: " + std::to_string(line) +
+		message_error = "\nFile name: " + filename + "\nLine#: " + std::to_string(line) +
 			"\nTime: " + time + "Info: " + info;
 	}
 	virtual const char* what() const noexcept override
 	{
-		return err_info.c_str();
+		return message_error.c_str();
 	}
 protected:
-	std::string err_info;
+	std::string message_error;
 };
 
 class SizeError : public CommonError

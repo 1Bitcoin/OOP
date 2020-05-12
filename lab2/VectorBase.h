@@ -4,30 +4,22 @@
 #include <stdio.h>
 #include <memory>
 
-class VectorBase
+class VectorBase 
 { 
-protected:
-    std::shared_ptr<size_t> _size;
-    void setSize(size_t newSize);
 public:
-    VectorBase(size_t size = 0) { _size = std::shared_ptr<size_t>(new size_t(size)); }
-    virtual size_t size() const;
-    virtual void resize(size_t newSize);
+	VectorBase() { _size = std::shared_ptr<size_t>(new size_t(0)); };
+	virtual ~VectorBase() = 0;
+
+	void resize(size_t newSize) { setSize(newSize); };
+
+	bool is_empty() const { return size() == 0; };
+	virtual size_t size() const { return bool(_size) ? *_size : 0; };
+
+protected:
+	std::shared_ptr<size_t> _size;
+	void setSize(size_t newSize) { *_size = newSize; };
 };
 
-void VectorBase::setSize(size_t newSize)
-{
-    *_size = newSize; // nullptr??
-}
-
-size_t VectorBase::size() const
-{
-    return bool(_size) ? *_size : 0;
-}
-
-void VectorBase::resize(size_t newSize)
-{
-    setSize(newSize);
-}
+VectorBase::~VectorBase() {}; // in cpp
 
 #endif /* VectorBase_h */

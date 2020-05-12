@@ -8,14 +8,52 @@ int main() {
     Vector<double> data = { 1., 2., 3., 4., 5., 6., 7., 8., 9. };
 
     Vector<int> test2(5);
-    Vector<int> test3 = { 1, 5, 6, 7, 8 };
+	Vector<int> test3 = { 1, 5, 6, 7, 8 };
 
     Vector<int> test4 = { 1, 228, 6, 7, 8 };
 
-    Vector<double> test;
+    Vector<int> test(4);
 
     test2 = test4;
 
+	std::cout << "Resize \n";
+
+	auto begin = test4.begin();
+	auto end = test4.end();
+
+	test4.resize(1);
+
+	for (auto a : test4)
+	{
+		std::cout << " " << a << "\n";
+	}
+
+	std::cout << "From std::vector to Vector: \n";
+
+	std::vector<int> v = { 7, 5, 16, 8 };
+
+	test = v;
+
+	std::cout << "isEmpty?: \n";
+	std::cout << test.is_empty() << "\n";
+
+	std::cout << "True?: \n";
+	bool a = test2 >= test3;
+	std::cout << a << "\n";
+
+	/////////////
+	Vector<int> vec(std::vector<int> { 227, 125, 1612, 8888 });
+
+	Vector<int> vec2({1, 2, 3});
+
+	std::cout << vec << "\n";
+
+	std::cout << test << "\n";
+
+    std::cout << "From array: \n";
+    double arr[5] = {5, 1, 7, 4, 0};
+    Vector<double> v4(5, arr);
+    std::cout << v4 << "\n";
 
     //Vector<int> data32(Vector<double> data2 = { 1.55, 2.32 });
 
@@ -24,8 +62,18 @@ int main() {
     Iterator<double> iterator = vec0.begin();
 
     Vector<int> test1 = {228, 2228, 1137};
+	const Vector<int> test12 = { 22568, 2228, 1137 };
 
-    const Iterator<int> iterator1 = test1.begin();
+	IteratorConst<int> iterator12(test12);
+	IteratorConst<int> iterator122 = test12.cend();
+
+	IteratorConst<int> iterator1232(test1);
+
+	IteratorConst<int> iterator12323 = test1.cbegin();
+
+	IteratorConst<int> iterator12324 = test12.cend();
+
+    Iterator<int> iterator1 = test1.begin();
 
     std::cout << *iterator1;
 
@@ -47,7 +95,7 @@ int main() {
         
         Iterator<double> it1 = vec.begin();
         it1++;
-        vec2.norm();
+        test1.norm();
         
         if (vec == vec2)
             std::cout << "vec == vec2" << std::endl;

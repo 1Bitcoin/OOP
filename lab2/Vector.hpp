@@ -11,7 +11,7 @@
 #define EPS 1e-5
 
 template<typename DataType>
-Vector<DataType> Vector<DataType>::norm() const
+void Vector<DataType>::norm()
 {
     if (!length())
     {
@@ -21,8 +21,6 @@ Vector<DataType> Vector<DataType>::norm() const
 
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] = coords.get()[i] / length();
-
-    return *this;
 }
 
 template<typename DataType>
@@ -80,7 +78,7 @@ Vector<DataType>::Vector()
 {
     setSize(0);
     coords.reset();
-    std::shared_ptr<DataType> coords = nullptr;
+    std::shared_ptr<DataType[]> coords = nullptr;
 }
 
 template<typename DataType>
@@ -95,9 +93,8 @@ Vector<DataType>::Vector(Vector<DataType> &&other)
 template<typename DataType>
 Vector<DataType>::Vector(size_t size)
 {
-    setSize(size);
-
     new_memory(size);
+	setSize(size);
 
     if (coords.get() == nullptr) {
         time_t t_time = time(NULL);
@@ -113,9 +110,8 @@ Vector<DataType>::Vector(size_t size)
 template<typename DataType>
 Vector<DataType>::Vector(std::initializer_list<DataType> data)
 {
-    setSize(data.size());
-
     new_memory(data.size());
+	setSize(data.size());
 
     if (coords.get() == nullptr) {
         time_t t_time = time(NULL);
@@ -134,8 +130,9 @@ Vector<DataType>::Vector(std::initializer_list<DataType> data)
 template<typename DataType>
 Vector<DataType>::Vector(const Vector<DataType> &other)
 {
-    setSize(other.size());
     new_memory(other.size());
+	setSize(other.size());
+
 
     if (coords.get() == nullptr) {
         time_t t_time = time(NULL);
@@ -251,7 +248,7 @@ bool Vector<DataType>::operator != (const Vector<DataType> &other) const
 
     }
     
-    return ! (*this == other);
+    return !(*this == other);
 }
 
 template<typename DataType>
@@ -342,18 +339,27 @@ Vector<DataType> & Vector<DataType>::operator = (const Vector<DataType> &other)
 template<typename DataType>
 Vector<DataType>& Vector<DataType>::operator = (Vector<DataType> &&other)
 {
-    if (size() != other.size()) {
-        time_t t_time = time(NULL);
-		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
-
-    }
-    
     this->coords = other.coords;
     this->setSize(other.size());
     other.coords = nullptr;
     other.resize(0);
 
     return *this;
+}
+
+template<typename DataType>
+Vector<DataType>& Vector<DataType>::operator =(const std::vector<DataType> &data)
+{
+	if (size() != data.size()) {
+		time_t t_time = time(NULL);
+		throw SizeError(__FILE__, __LINE__, ctime(&t_time));
+
+	}
+
+	for (size_t i = 0; i < size(); i++)
+		this->coords.get()[i] = data[i];
+
+	return *this;
 }
 
 template<typename DataType>
@@ -415,6 +421,12 @@ Vector<DataType> Vector<DataType>::operator-() const
 }
 
 template<typename DataType>
+Vector<DataType> Vector<DataType>::operator+() const
+{
+	return Vector<DataType>();
+}
+
+template<typename DataType>
 Vector<DataType> Vector<DataType>::operator / (DataType k) const
 {
     if (abs(k) < EPS) {
@@ -425,7 +437,9 @@ Vector<DataType> Vector<DataType>::operator / (DataType k) const
     
     Vector<DataType> tmp(*this);
 
-    return tmp /= k;
+	tmp /= k;
+
+    return tmp;
 }
 
 template<typename DataType>
@@ -433,20 +447,9 @@ Vector<DataType> Vector<DataType>::operator *(DataType k) const
 {
     Vector<DataType> tmp(*this);
 
-    return tmp *= k;
-}
+	tmp *= k;
 
-template<typename DataType>
-Vector<DataType> Vector<DataType>::operator -()
-{
-    Vector<DataType> tmp(*this);
-    return tmp *= -1;
-}
-
-template<typename DataType>
-Vector<DataType> Vector<DataType>::operator +()
-{
-    return Vector<DataType>();
+	return tmp;
 }
 
 template<typename DataType>
@@ -486,21 +489,33 @@ Iterator<DataType> Vector<DataType>::end()
 }
 
 template <typename DataType>
-IteratorConst<DataType> Vector<DataType>::begin() const
+IteratorConst<DataType> const Vector<DataType>::cbegin() const
 {
     return IteratorConst<DataType>(*this);
 }
 
 template <typename DataType>
-IteratorConst<DataType> Vector<DataType>::end() const
+IteratorConst<DataType> const Vector<DataType>::cend() const
 {
-    return IteratorConst<DataType>(*this + size());
+    return IteratorConst<DataType>(*this, size());
+}
+
+template <typename DataType>
+IteratorConst<DataType> Vector<DataType>::cbegin()
+{
+	return IteratorConst<DataType>(*this);
+}
+
+template <typename DataType>
+IteratorConst<DataType> Vector<DataType>::cend()
+{
+	return IteratorConst<DataType>(*this, size());
 }
 
 template <typename DataType>
 void Vector<DataType>::new_memory(size_t num_elements)
 {
     coords.reset();
-    std::shared_ptr<DataType> temp(new DataType[num_elements], std::default_delete<DataType[]>());
+    std::shared_ptr<DataType[]> temp(new DataType[num_elements], std::default_delete<DataType[]>());
     coords = temp;
 }

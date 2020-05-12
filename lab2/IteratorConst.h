@@ -18,12 +18,10 @@ class Vector;
 template <typename DataType>
 class IteratorConst : public IteratorBase
 {
-private:
-      std::weak_ptr<DataType> ptr;
-
 public:
     IteratorConst(const IteratorConst<DataType>& iter);
     IteratorConst(const Vector<DataType>& vec, size_t index = 0);
+
 
     const DataType& operator*() const;
     const DataType *operator->() const;
@@ -50,6 +48,10 @@ public:
     bool operator!=(const IteratorConst<DataType>& b) const;
 
     bool control(int string) const;
+
+private:
+	std::weak_ptr<DataType[]> ptr;
+
 };
 
 template <typename DataType>
@@ -67,6 +69,7 @@ IteratorConst<DataType>::IteratorConst(const IteratorConst<DataType>& iter)
     this->position = iter.position;
     this->num_elem = iter.num_elem;
 }
+
 
 template <typename DataType>
 const DataType& IteratorConst<DataType>::operator*() const

@@ -12,24 +12,22 @@
 template<typename DataType>
 class Vector : public VectorBase
 {
-private:
-    std::shared_ptr<DataType> coords;
-
 public:
     friend class Iterator<DataType>;
+	friend class IteratorConst<DataType>;
 
     Vector();
+	explicit Vector(size_t size); // explicit
     Vector(const std::vector<DataType> &data);
     Vector(size_t count, DataType* data);
     Vector(std::initializer_list<DataType> data);
-    Vector(const Vector<DataType> &other); //explicit
-    Vector(Vector<DataType> &&other);
-	Vector(size_t size);
+	Vector(Vector<DataType> &&other);
+	explicit Vector(const Vector<DataType> &other);
 
-	virtual ~Vector();
+	virtual ~Vector(); // override // err
 
 	DataType length() const;
-	Vector<DataType> norm() const;
+	void norm();
 	DataType angle(const Vector<DataType> &other) const;
 	Vector<DataType> vectorMult(const Vector<DataType> &other) const;
 
@@ -38,22 +36,27 @@ public:
 
 	Iterator<DataType> begin();
 	Iterator<DataType> end();
-    IteratorConst<DataType> begin() const;
-    IteratorConst<DataType> end() const;
+
+	IteratorConst<DataType> cbegin();
+	IteratorConst<DataType> cend();
+
+    IteratorConst<DataType> const cbegin() const;
+    IteratorConst<DataType> const cend() const;
 
     Vector<DataType>& operator =(const Vector<DataType> &other);
     Vector<DataType>& operator =(Vector<DataType> &&other);
     Vector<DataType>& operator =(std::initializer_list<DataType> data);
+	Vector<DataType>& operator =(const std::vector<DataType> &data);
 
     Vector<DataType>& operator +=(const Vector<DataType> &other);
     Vector<DataType>& operator -=(const Vector<DataType> &other);
     Vector<DataType>& operator *=(DataType k);
     Vector<DataType>& operator /=(DataType k);
 
-	bool operator == (const Vector<DataType> &other) const;
-	bool operator != (const Vector<DataType> &other) const;
-	bool operator >= (const Vector<DataType> &other) const;
-	bool operator <= (const Vector<DataType> &other) const;
+	bool operator ==(const Vector<DataType> &other) const;
+	bool operator !=(const Vector<DataType> &other) const;
+	bool operator >=(const Vector<DataType> &other) const;
+	bool operator <=(const Vector<DataType> &other) const;
 
 	Vector<DataType> operator *(DataType k) const;
 	Vector<DataType> operator /(DataType k) const;
@@ -61,13 +64,15 @@ public:
 	Vector<DataType> operator -(const Vector<DataType> &other) const;
 	Vector<DataType> operator -() const;
 	Vector<DataType> operator +() const;
-	Vector<DataType> operator -();
-	Vector<DataType> operator +();
 
-	DataType & operator [] (std::size_t i);
-	const DataType & operator [] (std::size_t i) const;
+	DataType& operator [](std::size_t i);
+	const DataType& operator [](std::size_t i) const;
 
     void new_memory(size_t num_elements);
+
+private:
+	std::shared_ptr<DataType[]> coords;
+
 };
 
 template<class DataType>

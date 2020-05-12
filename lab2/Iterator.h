@@ -16,12 +16,9 @@ class Vector;
 template <typename DataType>
 class Iterator : public IteratorBase
 {
-private:
-      std::weak_ptr<DataType> ptr;
-
 public:
 	Iterator(const Iterator<DataType>& iter);
-    Iterator(const Vector<DataType>& vec, size_t index = 0);
+    Iterator(Vector<DataType>& vec, size_t index = 0);
 
 	DataType& operator*();
     const DataType& operator*() const;
@@ -44,10 +41,14 @@ public:
     bool operator!=(const Iterator<DataType>& b) const;
 
     bool control(int string) const;
+
+private:
+	std::weak_ptr<DataType[]> ptr;
+
 };
 
 template <typename DataType>
-Iterator<DataType>::Iterator(const Vector<DataType>& vec, size_t index)
+Iterator<DataType>::Iterator(Vector<DataType>& vec, size_t index)
 {
     this->num_elem = vec._size;
     this->ptr = vec.coords;
