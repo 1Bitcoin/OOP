@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <ctime>
+#include <iterator>
 
 #include "IteratorBase.h"
 #include "Errors.h"
@@ -24,14 +25,19 @@ public:
     const DataType& operator*() const;
     DataType* operator->();
     const DataType* operator->() const;
+	operator bool() const;
 
     Iterator<DataType>& operator=(const Iterator<DataType>& iter);
+
+	Iterator<DataType>& operator+=(int n);
+	Iterator<DataType> operator+(int n);
     Iterator<DataType>& operator++();
     Iterator<DataType> operator++(int);
-    Iterator<DataType>& operator--();
-    Iterator<DataType> operator--(int);
 
-    operator bool() const;
+	Iterator<DataType>& operator-=(int n);
+	Iterator<DataType> operator-(int n);
+	Iterator<DataType>& operator--();
+	Iterator<DataType> operator--(int);
 
     bool operator<=(const Iterator<DataType>& b) const;
     bool operator<(const Iterator<DataType>& b) const;
@@ -132,6 +138,15 @@ Iterator<DataType>& Iterator<DataType>::operator++()
 }
 
 template <typename DataType>
+Iterator<DataType>& Iterator<DataType>::operator+=(int n)
+{
+	control(__LINE__);
+	this->position += n;
+
+	return *this;
+}
+
+template <typename DataType>
 Iterator<DataType> Iterator<DataType>::operator++(int)
 {
     control(__LINE__);
@@ -139,6 +154,16 @@ Iterator<DataType> Iterator<DataType>::operator++(int)
     Iterator<DataType> tmp(*this);
     this->operator++();
     return tmp;
+}
+
+template <typename DataType>
+Iterator<DataType> Iterator<DataType>::operator+(int n)
+{
+	control(__LINE__);
+	Iterator<DataType> iter(*this);
+	iter += n;
+
+	return iter;
 }
 
 template <typename DataType>
@@ -158,6 +183,26 @@ Iterator<DataType> Iterator<DataType>::operator--(int)
     Iterator<DataType> tmp(*this);
     this->operator--();
     return tmp;
+}
+
+template <typename DataType>
+Iterator<DataType>& Iterator<DataType>::operator-=(int n)
+{
+	control(__LINE__);
+	position -= n;
+
+	return *this;
+}
+
+template <typename DataType>
+Iterator<DataType> Iterator<DataType>::operator-(int n)
+{
+	control(__LINE__);
+
+	Iterator<DataType> iter(*this);
+	iter.position = this->position - n;
+
+	return iter;
 }
 
 template <typename DataType>

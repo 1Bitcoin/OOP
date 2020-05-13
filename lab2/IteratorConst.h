@@ -6,7 +6,7 @@
 #include <memory>
 #include "IteratorBase.h"
 #include <ctime>
-
+#include <iterator>
 
 #include "IteratorBase.h"
 #include "Errors.h"
@@ -30,12 +30,12 @@ public:
     IteratorConst<DataType>& operator=(const IteratorConst<DataType>& iter);
 
     IteratorConst<DataType>& operator+=(int n);
-    IteratorConst<DataType> operator+(int n) const;
+    IteratorConst<DataType> operator+(int n);
     IteratorConst<DataType>& operator++();
     IteratorConst<DataType> operator++(int);
 
     IteratorConst<DataType>& operator-=(int n);
-    IteratorConst<DataType> operator-(int n) const;
+    IteratorConst<DataType> operator-(int n);
     IteratorConst<DataType>& operator--();
     IteratorConst<DataType> operator--(int);
 
@@ -121,13 +121,13 @@ template <typename DataType>
 IteratorConst<DataType>& IteratorConst<DataType>::operator+=(int n)
 {
     control(__LINE__);
-    ptr += n;
+	this->position += n;
 
     return *this;
 }
 
 template <typename DataType>
-IteratorConst<DataType> IteratorConst<DataType>::operator+(int n) const
+IteratorConst<DataType> IteratorConst<DataType>::operator+(int n)
 {
     control(__LINE__);
     IteratorConst<DataType> iter(*this);
@@ -164,12 +164,12 @@ IteratorConst<DataType>& IteratorConst<DataType>::operator-=(int n)
 }
 
 template <typename DataType>
-IteratorConst<DataType> IteratorConst<DataType>::operator-(int n) const
+IteratorConst<DataType> IteratorConst<DataType>::operator-(int n)
 {
     control(__LINE__);
 
     IteratorConst<DataType> iter(*this);
-    iter -= n;
+    iter.position = this->position - n;
 
     return iter;
 }

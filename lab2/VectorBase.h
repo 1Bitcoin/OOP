@@ -20,6 +20,4 @@ protected:
 	void setSize(size_t newSize) { *_size = newSize; };
 };
 
-VectorBase::~VectorBase() {};
-
 #endif /* VectorBase_h */

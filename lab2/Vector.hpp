@@ -10,6 +10,96 @@
 
 #define EPS 1e-5
 
+
+template<class DataType>
+std::ostream & operator <<(std::ostream &os, const Vector<DataType> &vector)
+{
+	os << "\n" << "Vector<" << typeid(DataType).name() << "> { ";
+	for (size_t i = 0; i < vector.size(); i++)
+	{
+		os << vector[i];
+		if (i != vector.size() - 1) {
+			os << ", ";
+		}
+	}
+	os << " }" << std::endl;
+	return os;
+}
+
+template<typename DataType>
+Vector<DataType>& Vector<DataType>::multiply_to_number(const DataType& k)
+{
+	*this *= k;
+
+	return *this;
+}
+
+template<typename DataType>
+Vector<DataType>& Vector<DataType>::devide_by_number(const DataType& k)
+{
+	*this /= k;
+
+	return *this;
+}
+
+template<typename DataType>
+Vector<DataType> Vector<DataType>::multiply_to_number_with_assigment(const DataType& k)
+{
+	return *this * k;
+}
+
+template<typename DataType>
+Vector<DataType> Vector<DataType>::devide_by_number_with_assigment(const DataType& k)
+{
+	return *this / k;
+}
+
+template<typename DataType>
+Vector<DataType> Vector<DataType>::make_vector_negative() const
+{
+	*this * (-1);
+
+	return Vector<DataType>();
+}
+
+template<typename DataType>
+Vector<DataType> Vector<DataType>::make_vector_positive() const
+{
+	return Vector<DataType>();
+}
+
+template<typename DataType>
+DataType Vector<DataType>::multiply_vector(const Vector<DataType> &other)
+{
+	return *this * other;
+}
+
+template<typename DataType>
+Vector<DataType>& Vector<DataType>::substract_vector(const Vector<DataType> &other)
+{
+	return *this- other;
+}
+
+template<typename DataType>
+Vector<DataType>& Vector<DataType>::add_vector(const Vector<DataType> &other)
+{
+	return *this + other;
+}
+
+template<typename DataType>
+Vector<DataType> Vector<DataType>::add_vector_with_assigment(const Vector<DataType> &other) const
+{
+	Vector<DataType> tmp = *this + other;
+	return tmp;
+}
+
+template<typename DataType>
+Vector<DataType> Vector<DataType>::substract_vector_with_assigment(const Vector<DataType> &other) const
+{
+	Vector<DataType> tmp = *this - other;
+	return tmp;
+}
+
 template<typename DataType>
 void Vector<DataType>::norm()
 {
@@ -189,7 +279,7 @@ Vector<DataType> & Vector<DataType>::operator -= (const Vector<DataType> &other)
 }
 
 template<typename DataType>
-Vector<DataType> & Vector<DataType>::operator *= (DataType k)
+Vector<DataType> & Vector<DataType>::operator *= (const DataType& k)
 {
     for (size_t i = 0; i < size(); i++)
         coords.get()[i] *= k;
@@ -198,7 +288,7 @@ Vector<DataType> & Vector<DataType>::operator *= (DataType k)
 }
 
 template<typename DataType>
-Vector<DataType> & Vector<DataType>::operator /= (DataType k)
+Vector<DataType> & Vector<DataType>::operator /= (const DataType& k)
 {
     if (abs(k) < EPS) {
         time_t t_time = time(NULL);
@@ -424,7 +514,7 @@ Vector<DataType> Vector<DataType>::operator+() const
 }
 
 template<typename DataType>
-Vector<DataType> Vector<DataType>::operator / (DataType k) const
+Vector<DataType> Vector<DataType>::operator / (const DataType& k) const
 {
     if (abs(k) < EPS) {
         time_t t_time = time(NULL);
@@ -440,7 +530,7 @@ Vector<DataType> Vector<DataType>::operator / (DataType k) const
 }
 
 template<typename DataType>
-Vector<DataType> Vector<DataType>::operator *(DataType k) const
+Vector<DataType> Vector<DataType>::operator *(const DataType& k) const
 {
     Vector<DataType> tmp(*this);
 
@@ -486,13 +576,13 @@ Iterator<DataType> Vector<DataType>::end()
 }
 
 template <typename DataType>
-IteratorConst<DataType> const Vector<DataType>::cbegin() const
+IteratorConst<DataType> const Vector<DataType>::begin() const
 {
     return IteratorConst<DataType>(*this);
 }
 
 template <typename DataType>
-IteratorConst<DataType> const Vector<DataType>::cend() const
+IteratorConst<DataType> const Vector<DataType>::end() const
 {
     return IteratorConst<DataType>(*this, size());
 }
