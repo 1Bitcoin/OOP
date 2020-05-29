@@ -13,7 +13,7 @@ enum direction
 {
     UP = 1,
     DOWN = -1,
-    STAY = 0
+    STILL = 0
 };
 
 #endif // COMMON_H

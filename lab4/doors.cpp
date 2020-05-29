@@ -29,7 +29,7 @@ void Lift_doors::start_openning()
         qDebug() << "Двери открываются.";
         doors_open_timer->start(OPENING_N_CLOSING);
     }
-    if (current_state == CLOSING)
+    else if (current_state == CLOSING)
     {
         current_state = OPENNING;
         qDebug() << "Двери открываются.";

@@ -13,8 +13,8 @@ class Lift_cabin : public QObject
     {
         MOVING,
         GOT_TARGET,
-        WAITING_CALL,
-        WAITING_ENTRANCE
+        STAY,
+        WAITING
     };
 
 public:
@@ -30,7 +30,7 @@ public slots:
     void cabin_moving();
     void cabin_stopping();
     void cabin_set_target(int floor);
-
+    void cabin_wait();
 
 private:
     int current_floor;

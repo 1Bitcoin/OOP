@@ -4,7 +4,7 @@
 Control_panel::Control_panel(QObject *parent) : QObject(parent)
 {
     current_state = FREE;
-    cur_direction = STAY;
+    cur_direction = STILL;
     cur_floor = 1;
 
     for (int i = 0; i < NUM_FLOORS; i++)
@@ -24,7 +24,7 @@ void Control_panel::achieved_floor(int floor)
     if (current_state == BUSY)
     {
         cur_floor = floor;
-        cur_direction = STAY;
+        cur_direction = STILL;
         calls[floor - 1] = false; // данный этаж больше не цель
 
         if (next_target(floor)) // если существует еще какой-то вызов
