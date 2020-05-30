@@ -13,7 +13,6 @@ Lift_cabin::Lift_cabin(QObject *parent) : QObject(parent), doors(std::make_share
     QObject::connect(crossing_floor_timer.get(), SIGNAL(timeout()), this, SLOT(cabin_moving()));
     QObject::connect(this, SIGNAL(pre_moving()), doors.get(), SLOT(start_closing()));
     QObject::connect(doors.get(), SIGNAL(closed_doors()), this, SLOT(cabin_moving()));
-    QObject::connect(doors.get(), SIGNAL(closed_doors()), this, SLOT(cabin_wait()));
 }
 
 void Lift_cabin::cabin_moving()
@@ -65,14 +64,5 @@ void Lift_cabin::cabin_set_target(int floor)
     {
         current_direction = (current_floor > target) ? DOWN : UP;
         emit pre_moving();
-    }
-}
-
-void Lift_cabin::cabin_wait()
-{
-    if (current_state == STAY)
-    {
-        current_state = WAITING;
-        qDebug() << "Лифт остановился в режиме ожидания";
     }
 }
