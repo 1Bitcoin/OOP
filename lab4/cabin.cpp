@@ -19,23 +19,14 @@ void Lift_cabin::cabin_moving()
 {
     if (current_state == GOT_TARGET)
     {
-        if (current_floor == target)
-        {
-            emit reached_target(current_floor);
-        }
-        else
-        {
-            current_state = MOVING;
-            crossing_floor_timer->start(CROSSING_FLOOR);
-        }
+        current_state = MOVING;
+        crossing_floor_timer->start(CROSSING_FLOOR);
     }
     else if (current_state == MOVING)
     {
         current_floor += (current_direction == UP ? 1 : -1);
         if (current_floor == target)
-        {
             emit reached_target(current_floor);
-        }
         else
         {
             emit crossing_floor(current_floor, current_direction);
